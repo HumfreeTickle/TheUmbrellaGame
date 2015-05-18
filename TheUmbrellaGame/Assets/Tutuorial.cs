@@ -22,6 +22,9 @@ public class Tutuorial : MonoBehaviour {
 	}
 	
 	void WalkThroughConditions(){
+		if(Input.GetKeyUp(KeyCode.Return)){
+			x = 5;
+		}
 		switch(x){
 		case 0:
 			if(Input.GetKeyUp(KeyCode.UpArrow)){

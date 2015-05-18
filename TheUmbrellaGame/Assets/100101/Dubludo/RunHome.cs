@@ -44,8 +44,6 @@ public class RunHome : MonoBehaviour {
 			transform.position = Vector3.Lerp (transform.position, RunTo, Speed * Time.deltaTime);
 			Destroy(Landing);
 			Debug.Log ("Should Lerp");
-
-			
 		}
 	}
 }
