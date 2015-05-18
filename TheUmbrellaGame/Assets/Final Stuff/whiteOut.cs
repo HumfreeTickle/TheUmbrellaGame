@@ -13,6 +13,7 @@ public class whiteOut : MonoBehaviour
 	void Start ()
 	{
 		whiteIN = GetComponent<Image> ().color;
+		whiteIN = Color.white;
 		_image = GetComponent<Image>();
 	}
 	
