@@ -14,7 +14,6 @@ public class controller : MonoBehaviour
 	public Rigidbody backsphere;
 	public ForceMode theForce;
 	public Rigidbody handle;
-	public Rigidbody anEmptyPlane;
 	private Rigidbody rb;
 	private float lsphereMass;
 	private float rsphereMass;
