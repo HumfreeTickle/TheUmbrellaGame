@@ -2,53 +2,47 @@
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
+	private float smoothing = 1f; //speed at which the camera moves to the new location
+	public float smoothSpeed;
 
+	public Transform umbrella; // this is used to assign the variables with, should be the main sphere
+	public Transform whatToLookAt; // what the camer should posiiton itself to look at;
 
-	public GameObject playerToFollow;
-	public float zMargin = 5;
-	public float xMargin = 10;
-	public float cameraDistance;
+	public float distance = 10;
+	public float height = 1;
 
-	private float zTarget;
-	private float xTarget;
-	private bool movingX;
+	private float umbrellaRotation; //Holds the umbrella's y axis rotation
+	private float umbrellaHeight; //Holds the umbrella's y axis position
 
-	// Use this for initialization
-	void Start () {
-		zTarget = transform.position.z;
-		xTarget = transform.position.x;
-	}
+	private float currentRotationAngle; // current rotation along the y axis
+	private float currentHeight; // current position along the y axis
 
-	private bool CheckZMargin()
-	{
-		// Returns true if the distance between the camera and the player in the x axis is greater than the x margin.
-		return Mathf.Abs(transform.position.z - playerToFollow.transform.position.z) > zMargin;
-	}
+	private Quaternion currentRotation;
 
-	private bool CheckXMargin()
-	{
-		// Returns true if the distance between the camera and the player in the x axis is greater than the x margin.
-		return Mathf.Abs(transform.position.x - playerToFollow.transform.position.x) > xMargin;
-	}
+	void LateUpdate(){
 
-	// Update is called once per frame
-	void Update () {
-		print (CheckZMargin());
-		if (CheckZMargin()) {
-			print (transform.position.z - playerToFollow.transform.position.z);
-			zTarget = Mathf.Lerp(transform.position.z, playerToFollow.transform.position.z - cameraDistance, Time.deltaTime);
-		}
-		if (CheckXMargin ()) {
-			movingX = true;
-			if(movingX){
-				xTarget = Mathf.Lerp(transform.position.x, playerToFollow.transform.position.x, Time.deltaTime);
-				if(transform.position.x == playerToFollow.transform.position.x){
-					movingX = false;
-				}
-			}
-		}
-
-
-		transform.position = new Vector3(xTarget, transform.position.y, zTarget);
+		//Sets all the variables
+		umbrellaRotation = umbrella.eulerAngles.y;
+		umbrellaHeight = umbrella.position.y;
+		currentRotationAngle = transform.eulerAngles.y;
+		currentHeight = transform.position.y;
+		
+		//Smoothly transitions between the camera and the umbrella
+		currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, umbrellaRotation, smoothing * Time.deltaTime);
+		currentHeight = Mathf.Lerp(currentHeight, umbrellaHeight + height, smoothing * Time.deltaTime); // This is jst for rising and falling
+		
+		currentRotation = Quaternion.Euler (0, currentRotationAngle, 0); 
+		
+		//Actually moves the camera into position
+		transform.position = umbrella.position;
+		transform.position -= currentRotation * Vector3.forward * distance;
+		transform.position = new Vector3(transform.position.x, currentHeight, transform.position.z);
+		
+		// Always look at the target
+		transform.LookAt (whatToLookAt); // Handy little thing, without it the camera just follows the umbrella awkwardly
+		
+		//Changes how smoothly movement is (Probably shouldn't go higher that 1
+		smoothing = Mathf.Clamp(smoothSpeed, -1, 1);
+//		print (currentRotation);
 	}
 }
