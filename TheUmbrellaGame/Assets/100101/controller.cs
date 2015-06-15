@@ -50,7 +50,7 @@ public class controller : MonoBehaviour
 	{
 		// needs to keep using the absolute value so the player can rock back and forth to gain height
 		// after we work out how wind is going to work then it can change
-		if (Mathf.Abs(Input.GetAxis ("Vertical")) > 0) { // Probably should only use forward for this and have back be a kind of breaking system
+		if (Input.GetAxis ("Vertical") > 0) { // Probably should only use forward for this and have back be a kind of breaking system
 			rb.AddForce (transform.forward * Input.GetAxis ("Vertical") * speed, theForce); //Add force in the direction it is facing
 		}
 
@@ -96,9 +96,8 @@ public class controller : MonoBehaviour
 		} else {
 			rb.mass = rbMass;
 		}
-//		if(Input.GetKeyUp (KeyCode.Space)){
-//			rb.AddForce(Vector3.up * 2000);
-//		}
-
+		if(Input.GetKeyUp (KeyCode.Space)){
+			rb.AddForce(Vector3.up * 2000);
+		}
 	}
 }

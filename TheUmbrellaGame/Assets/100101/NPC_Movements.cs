@@ -25,7 +25,7 @@ public class NPC_Movements : MonoBehaviour {
 		transform.LookAt(waypoint.position);
 		npcNavMeshAgent.stoppingDistance = 5f;
 		if(npcNavMeshAgent.remainingDistance <= 5f){
-			print ("Stopped");
+//			print ("Stopped");
 		}
 	}
 
