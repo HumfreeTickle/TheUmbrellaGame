@@ -6,15 +6,18 @@ public class wind : MonoBehaviour {
 	public float windForce = 100;
 	public Transform umbrellaObject;
 
+	void Awake(){
+		umbrellaObject = GameObject.Find("Umbrella").transform;
+	}
+
 	void Update(){
 		umbrellaFalls();
+//		Invoke("Death", 2);
 	}
 
 	void umbrellaFalls(){
-		print (umbrellaObject.position.y);
 		if(umbrellaObject.position.y <= 40){
 			GetComponent<ParticleSystem>().enableEmission = true;
-			print (GetComponent<ParticleSystem>().enableEmission);
 		}else{
 			GetComponent<ParticleSystem>().enableEmission = false;
 		}
@@ -22,8 +25,11 @@ public class wind : MonoBehaviour {
 
 	void OnParticleCollision(GameObject umbrella){
 		if(umbrella.name == "main_Sphere"){
-			print("Hit");
 			umbrella.GetComponent<Rigidbody>().AddForce(Vector3.up * windForce);
 		}
+	}
+
+	void Death(){
+		Destroy(this.gameObject, 2);
 	}
 }
