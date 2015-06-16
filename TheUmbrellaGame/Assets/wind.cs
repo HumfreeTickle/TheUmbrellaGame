@@ -11,8 +11,9 @@ public class wind : MonoBehaviour {
 	}
 
 	void Update(){
+		transform.LookAt(GameObject.Find("main_Sphere").transform);
 		umbrellaFalls();
-//		Invoke("Death", 2);
+		Death();
 	}
 
 	void umbrellaFalls(){
@@ -30,6 +31,6 @@ public class wind : MonoBehaviour {
 	}
 
 	void Death(){
-		Destroy(this.gameObject, 2);
+		Destroy(this.gameObject, 5f);
 	}
 }
