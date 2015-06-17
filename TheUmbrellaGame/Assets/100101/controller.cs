@@ -89,15 +89,14 @@ public class controller : MonoBehaviour
 
 	void TheDescent ()
 	{
-		Mathf.Clamp(rb.mass, 1, 20);
-		if (Input.GetKey (KeyCode.Space)) {
-			rb.mass += forceApplied;
-			rb.mass = Mathf.Clamp(rb.mass, 1, 40);
-		} else {
-			rb.mass = rbMass;
-		}
+//		Mathf.Clamp(rb.mass, 1, 20);
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			rb.mass *= 100;
+//			rb.mass = Mathf.Clamp(rb.mass, 1, 40);
+		} 
 		if(Input.GetKeyUp (KeyCode.Space)){
 			rb.AddForce(Vector3.up * 2000);
+			rb.mass = rbMass;
 		}
 	}
 }
