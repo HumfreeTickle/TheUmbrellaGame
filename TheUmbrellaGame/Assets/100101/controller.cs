@@ -12,7 +12,9 @@ public class controller : MonoBehaviour
 	public Rigidbody rightsphere;
 	public Rigidbody frontsphere;
 	public Rigidbody backsphere;
-	public ForceMode theForce;
+	public ForceMode movementForce;
+	public ForceMode backwardForce;
+	public ForceMode rotationForce;
 	public Rigidbody handle;
 	private Rigidbody rb;
 	private float lsphereMass;
@@ -41,21 +43,24 @@ public class controller : MonoBehaviour
 	void FixedUpdate ()
 	{
 		Movement ();
-		HorizontalMass ();
+//		HorizontalMass ();
 		VerticalMass ();
 		TheDescent ();
 	}
-	
+
 	void Movement ()
 	{
 		// needs to keep using the absolute value so the player can rock back and forth to gain height
 		// after we work out how wind is going to work then it can change
 		if (Input.GetAxis ("Vertical") > 0) { // Probably should only use forward for this and have back be a kind of breaking system
-			rb.AddForce (transform.forward * Input.GetAxis ("Vertical") * speed, theForce); //Add force in the direction it is facing
+			rb.AddForce (transform.forward * Input.GetAxis ("Vertical") * speed, movementForce); //Add force in the direction it is facing
+		}
+		if (Input.GetAxis ("Vertical") < 0) { // Probably should only use forward for this and have back be a kind of breaking system
+			rb.AddForce (transform.forward * Input.GetAxis ("Vertical"), backwardForce); //Add force in the direction it is facing
 		}
 
 		if (Mathf.Abs (Input.GetAxis ("Horizontal")) > 0) { //This shoould rotate the player rather than move sideways
-			rb.AddTorque (transform.up * Input.GetAxis ("Horizontal") * turningSpeed, theForce);
+			rb.AddTorque (transform.up * Input.GetAxis ("Horizontal") * turningSpeed, rotationForce);
 		} else {
 			rb.angularVelocity = Vector3.Lerp (rb.angularVelocity, Vector3.zero, Time.deltaTime * 10);
 		}
@@ -79,7 +84,7 @@ public class controller : MonoBehaviour
 			frontsphere.mass = fsphereMass + forceApplied;
 			handle.mass = handleMass + forceApplied / 2;
 		} else if (Input.GetAxisRaw ("Vertical") < 0) {
-			backsphere.mass = bsphereMass + forceApplied;
+			backsphere.mass = bsphereMass + forceApplied*2;
 		} else if (Input.GetAxisRaw ("Vertical") == 0) {
 			frontsphere.mass = fsphereMass;
 			backsphere.mass = bsphereMass;
@@ -95,7 +100,7 @@ public class controller : MonoBehaviour
 //			rb.mass = Mathf.Clamp(rb.mass, 1, 40);
 		} 
 		if(Input.GetKeyUp (KeyCode.Space)){
-			rb.AddForce(Vector3.up * 2000);
+//			rb.AddForce(Vector3.up * 2000);
 			rb.mass = rbMass;
 		}
 	}
