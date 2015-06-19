@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour {
 
 		//This might be the problem with the jittering. Seems like it calculates tooooo slowly
 		currentHeight = Mathf.Lerp(currentHeight, umbrellaHeight + height, smoothing * Time.deltaTime); // This is jst for rising and falling
-		currentRotation = Quaternion.Euler (currentRotationAngleX, currentRotationAngleY, 0); 
+		currentRotation = Quaternion.Euler (0, currentRotationAngleY, 0); 
 
 		//Actually moves the camera into position
 		transform.position = umbrella.position;

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class whiteOut : MonoBehaviour
 {
-	public Color whiteIN;
+	private Color whiteIN;
 	public float speed = 0.5f;
 	public float _timer;
 	private Image _image;
@@ -21,10 +21,10 @@ public class whiteOut : MonoBehaviour
 	void Update ()
 	{
 		startWhite ();
-		_timer += Time.deltaTime;
-		if (_timer >= 360) {
-			endWhite ();
-		}
+//		_timer += Time.deltaTime;
+//		if (_timer >= 360) {
+//			endWhite ();
+//		}
 		_image.color = whiteIN;
 	}
 
