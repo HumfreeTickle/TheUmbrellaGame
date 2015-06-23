@@ -27,7 +27,7 @@ public class controller : MonoBehaviour
 	public float speed;
 	public float floating;
 	public float turningSpeed;
-	// Use this for initialization
+
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody> ();
@@ -38,12 +38,16 @@ public class controller : MonoBehaviour
 		bsphereMass = backsphere.mass;
 		handleMass = handle.mass;
 	}
-	
+
+	//Hello. htis is a test broadcast to see if this can work.
+	//Pretty sure the upload speed is far too slow but since this is juat for coding might not be an issue
+	//More will need to be done :)
+
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
 		Movement ();
-//		HorizontalMass ();
+		HorizontalMass ();
 		VerticalMass ();
 		TheDescent ();
 	}
@@ -84,7 +88,7 @@ public class controller : MonoBehaviour
 			frontsphere.mass = fsphereMass + forceApplied;
 			handle.mass = handleMass + forceApplied / 2;
 		} else if (Input.GetAxisRaw ("Vertical") < 0) {
-			backsphere.mass = bsphereMass + forceApplied*2;
+			backsphere.mass = bsphereMass + forceApplied * 2;
 		} else if (Input.GetAxisRaw ("Vertical") == 0) {
 			frontsphere.mass = fsphereMass;
 			backsphere.mass = bsphereMass;
@@ -99,7 +103,7 @@ public class controller : MonoBehaviour
 			rb.mass *= 100;
 //			rb.mass = Mathf.Clamp(rb.mass, 1, 40);
 		} 
-		if(Input.GetKeyUp (KeyCode.Space)){
+		if (Input.GetKeyUp (KeyCode.Space)) {
 //			rb.AddForce(Vector3.up * 2000);
 			rb.mass = rbMass;
 		}
