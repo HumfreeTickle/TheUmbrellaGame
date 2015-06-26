@@ -2,9 +2,9 @@
  
 Shader "Our Toonshader Vol. 3" {
    Properties {
-    _Color ("Diffuse Material Color", Color) = (1,1,1,1)
-    _UnlitColor ("Unlit Color", Color) = (0.5,0.5,0.5,1)
-    _DiffuseThreshold ("Lighting Threshold", Range(-1.1,1)) = 0.1
+    _Color ("Diffuse Material Color", Color) = (1,1,1,1) //main colour
+    _UnlitColor ("Unlit Color", Color) = (0.5,0.5,0.5,1) //shadow colour
+    _DiffuseThreshold ("Lighting Threshold", Range(-1.1,1)) = 0.1 //the amount of shadow on the object
     _SpecColor ("Specular Material Color", Color) = (1,1,1,1)
     _Shininess ("Shininess", Range(0.5,1)) = 1 
     _OutlineThickness ("Outline Thickness", Range(0,1)) = 0.1
