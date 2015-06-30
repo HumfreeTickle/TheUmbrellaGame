@@ -14,7 +14,6 @@ public class controller : MonoBehaviour
 	public Rigidbody backsphere;
 	public ForceMode theForce;
 	public Rigidbody handle;
-	public Rigidbody anEmptyPlane;
 	private Rigidbody rb;
 	private float lsphereMass;
 	private float rsphereMass;
@@ -49,10 +48,10 @@ public class controller : MonoBehaviour
 	
 	void Movement ()
 	{
-
-		if (Mathf.Abs (Input.GetAxis ("Vertical")) > 0) { // Probably should only use forward for this and have back be a kind of breaking system
+		// needs to keep using the absolute value so the player can rock back and forth to gain height
+		// after we work out how wind is going to work then it can change
+		if (Mathf.Abs(Input.GetAxis ("Vertical")) > 0) { // Probably should only use forward for this and have back be a kind of breaking system
 			rb.AddForce (transform.forward * Input.GetAxis ("Vertical") * speed, theForce); //Add force in the direction it is facing
-//			anEmptyPlane.position += transform.forward * Input.GetAxis ("Vertical") * speed * Time.deltaTime;
 		}
 
 		if (Mathf.Abs (Input.GetAxis ("Horizontal")) > 0) { //This shoould rotate the player rather than move sideways
@@ -60,8 +59,6 @@ public class controller : MonoBehaviour
 		} else {
 			rb.angularVelocity = Vector3.Lerp (rb.angularVelocity, Vector3.zero, Time.deltaTime * 10);
 		}
-
-//		print (Vector3.Lerp(Vector3.forward, Vector3.up, Time.deltaTime));
 	}
 
 	void HorizontalMass ()
