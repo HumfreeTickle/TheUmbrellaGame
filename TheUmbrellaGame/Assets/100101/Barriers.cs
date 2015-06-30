@@ -10,7 +10,6 @@ public class Barriers : MonoBehaviour {
 	void OnTriggerStay(Collider barrier){
 		if(barrier.tag == "Player"){
 			barrier.GetComponent<Rigidbody>().AddForce(knockBack * directionOfForce);
-			print(knockBack * Vector3.forward * -1);
 		}
 	}
 }
