@@ -3,7 +3,7 @@ using System.Collections;
 
 public class wind : MonoBehaviour {
 
-	public float windForce = 100;
+	public float windForce;
 	public Transform umbrellaObject;
 
 	void Awake(){
@@ -16,8 +16,8 @@ public class wind : MonoBehaviour {
 		Death();
 	}
 
-	void umbrellaFalls(){
-		if(umbrellaObject.position.y <= 40){
+	void umbrellaFalls(){ //this was to make it a once off thing
+		if(umbrellaObject.position.y <= 20){
 			GetComponent<ParticleSystem>().enableEmission = true;
 		}else{
 			GetComponent<ParticleSystem>().enableEmission = false;

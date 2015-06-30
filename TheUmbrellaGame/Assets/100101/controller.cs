@@ -101,11 +101,11 @@ public class controller : MonoBehaviour
 	void TheDescent ()
 	{
 //		Mathf.Clamp(rb.mass, 1, 20);
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetButtonDown("Fire2")) {
 			rb.mass *= 100;
 //			rb.mass = Mathf.Clamp(rb.mass, 1, 40);
 		} 
-		if (Input.GetKeyUp (KeyCode.Space)) {
+		if (Input.GetButtonUp("Fire2")) {
 //			rb.AddForce(Vector3.up * 2000);
 			rb.mass = rbMass;
 		}
