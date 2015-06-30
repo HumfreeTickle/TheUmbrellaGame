@@ -9,14 +9,25 @@ public class CreateWind : MonoBehaviour {
 
 	void Update () {
 		if(transform.position.y <= 50 && transform.childCount == 0){
-			windCreation();
+			windFalling();
+		}
+		if(Input.GetButtonDown("Fire1") && transform.childCount == 0){
+			SummonWind();
 		}
 	}
 
-	void windCreation(){
+	void windFalling(){
 		spawnDistance = transform.position - new Vector3(0, 10, 0);
 
 		instatiatedWind = Instantiate(windSystem, spawnDistance, Quaternion.Euler(Vector3.forward)) as GameObject;
 		instatiatedWind.transform.parent = this.transform;                             
+	}
+
+	void SummonWind(){
+		print ("wind");
+//		spawnDistance = transform.position - new Vector3(0, 10, 0);
+//		
+//		instatiatedWind = Instantiate(windSystem, spawnDistance, Quaternion.Euler(Vector3.forward)) as GameObject;
+//		instatiatedWind.transform.parent = this.transform;  
 	}
 }
