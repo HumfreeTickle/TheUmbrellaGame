@@ -56,15 +56,17 @@ public class controller : MonoBehaviour
 	{
 		// needs to keep using the absolute value so the player can rock back and forth to gain height
 		// after we work out how wind is going to work then it can change
-		if (Input.GetAxis ("Vertical") > 0) { // Probably should only use forward for this and have back be a kind of breaking system
-			rb.AddForce (transform.forward * Input.GetAxis ("Vertical") * speed, movementForce); //Add force in the direction it is facing
+		if (Input.GetAxis ("Vertical_L") > 0) { // Probably should only use forward for this and have back be a kind of breaking system
+			print ("Vertical_L");
+			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
 		}
-		if (Input.GetAxis ("Vertical") < 0) { // Probably should only use forward for this and have back be a kind of breaking system
-			rb.AddForce (transform.forward * Input.GetAxis ("Vertical"), backwardForce); //Add force in the direction it is facing
+		if (Input.GetAxis ("Vertical_L") < 0) { // Probably should only use forward for this and have back be a kind of breaking system
+			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L"), backwardForce); //Add force in the direction it is facing
 		}
 
-		if (Mathf.Abs (Input.GetAxis ("Horizontal")) > 0) { //This shoould rotate the player rather than move sideways
-			rb.AddTorque (transform.up * Input.GetAxis ("Horizontal") * turningSpeed, rotationForce);
+		if (Mathf.Abs (Input.GetAxis ("Horizontal_L")) > 0) { //This shoould rotate the player rather than move sideways
+			rb.AddTorque (transform.up * Input.GetAxis ("Horizontal_L") * turningSpeed, rotationForce);
+			print ("Horizontal_L");
 		} else {
 			rb.angularVelocity = Vector3.Lerp (rb.angularVelocity, Vector3.zero, Time.deltaTime * 10);
 		}
@@ -72,11 +74,11 @@ public class controller : MonoBehaviour
 
 	void HorizontalMass ()
 	{
-		if (Input.GetAxisRaw ("Horizontal") < 0) {
+		if (Input.GetAxisRaw ("Horizontal_L") < 0) {
 			leftsphere.mass = lsphereMass + forceApplied;
-		} else if (Input.GetAxisRaw ("Horizontal") > 0) {
+		} else if (Input.GetAxisRaw ("Horizontal_L") > 0) {
 			rightsphere.mass = rsphereMass + forceApplied;
-		} else if (Input.GetAxisRaw ("Horizontal") == 0) {
+		} else if (Input.GetAxisRaw ("Horizontal_L") == 0) {
 			leftsphere.mass = lsphereMass;
 			rightsphere.mass = rsphereMass;
 		}
@@ -84,12 +86,12 @@ public class controller : MonoBehaviour
 
 	void VerticalMass ()
 	{
-		if (Input.GetAxisRaw ("Vertical") > 0) {
+		if (Input.GetAxisRaw ("Vertical_L") > 0) {
 			frontsphere.mass = fsphereMass + forceApplied;
 			handle.mass = handleMass + forceApplied / 2;
-		} else if (Input.GetAxisRaw ("Vertical") < 0) {
+		} else if (Input.GetAxisRaw ("Vertical_L") < 0) {
 			backsphere.mass = bsphereMass + forceApplied * 2;
-		} else if (Input.GetAxisRaw ("Vertical") == 0) {
+		} else if (Input.GetAxisRaw ("Vertical_L") == 0) {
 			frontsphere.mass = fsphereMass;
 			backsphere.mass = bsphereMass;
 			handle.mass = handleMass;

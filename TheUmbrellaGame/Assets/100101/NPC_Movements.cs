@@ -42,7 +42,7 @@ public class NPC_Movements : MonoBehaviour
 
 	void OnCollisionEnter (Collision col)
 	{
-		print (this.gameObject + " hit " + col.gameObject);
+//		print (this.gameObject + " hit " + col.gameObject);
 		lasthit = col.gameObject;
 		if (col.gameObject != lasthit || col.gameObject == null) {
 			npcNavMeshAgent.Stop ();
