@@ -3,6 +3,7 @@ using System.Collections;
 
 public class constraint : MonoBehaviour {
 
+// not sure if what this exactly does or if it needs to be kept or not
 
 	public float maxAngle;
 

@@ -77,7 +77,6 @@ public class _CycleDayNight : MonoBehaviour {
 		timePerHour = dayCycleLength/hoursPerDay;  
 		sun = GetComponent<Light> ();
 
-
 		if (sun != null)  
 		{ lightIntensity = sun.intensity; }  
 	}  

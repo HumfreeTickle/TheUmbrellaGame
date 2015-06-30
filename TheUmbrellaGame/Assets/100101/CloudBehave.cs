@@ -18,7 +18,6 @@ public class CloudBehave : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{	
-
 		cloud = GetComponent<Rigidbody>();
 	}
 	
