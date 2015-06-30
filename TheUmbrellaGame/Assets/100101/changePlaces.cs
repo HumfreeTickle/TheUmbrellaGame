@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//What was this for??????
+
 public class changePlaces : MonoBehaviour {
 
 	public Transform physicsTransform;

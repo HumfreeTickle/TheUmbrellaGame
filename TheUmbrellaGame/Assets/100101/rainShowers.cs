@@ -17,8 +17,7 @@ public class rainShowers : MonoBehaviour
 	
 
 	//Needs to rain only for a little bit then slowly stop
-	//Clouds should get bigger the darker they get and the light is gonna have to reflect that. I had them casting shadows at one time....hmm
-
+	
 	void Start ()
 	{
 		cloudColor = GetComponent<MeshRenderer> ().materials [0];

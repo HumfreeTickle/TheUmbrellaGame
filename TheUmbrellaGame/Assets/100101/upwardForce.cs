@@ -12,6 +12,7 @@ public class upwardForce : MonoBehaviour {
 	private float sw;
 	public float sine;
 
+	public ForceMode theForce;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -21,16 +22,19 @@ public class upwardForce : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-//		SineWave ();
+		SineWave ();
 		Vector3 force = Vector3.up * upwardsforce;
-		rb.AddForce (force);
+		rb.AddForce (force, theForce);
 	}
 
 	void SineWave(){
-		sine = 0;
-		sine += Time.time;
+		if(sine >= (Mathf.Sin(Mathf.PI/2))){
+			sine = 0;
+		}else{
+			sine += Time.time;
+		}
+
 		sw = Mathf.Sin (sine);
-		print (sw);
-		rb.mass = mainMass + sw/conterBalance;
+		upwardsforce = upwardsforce + sw/conterBalance;
 	}
 }
