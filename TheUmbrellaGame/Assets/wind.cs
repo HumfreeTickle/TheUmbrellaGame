@@ -19,13 +19,14 @@ public class wind : MonoBehaviour {
 	void umbrellaFalls(){ //this was to make it a once off thing
 		if(umbrellaObject.position.y <= 20){
 			GetComponent<ParticleSystem>().enableEmission = true;
-		}else{
+		}else if(GetComponent<ParticleSystem>() != null){
 			GetComponent<ParticleSystem>().enableEmission = false;
 		}
 	}
 
 	void OnParticleCollision(GameObject umbrella){
 		if(umbrella.name == "main_Sphere"){
+			print ("Hit");
 			umbrella.GetComponent<Rigidbody>().AddForce(Vector3.up * windForce);
 		}
 	}

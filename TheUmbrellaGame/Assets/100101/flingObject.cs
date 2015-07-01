@@ -60,7 +60,7 @@ public class flingObject : MonoBehaviour {
 //			player.transform.position += Vector3.forward * Time.deltaTime *5;
 			isAttached = true;
 			Destroy(theJoint);//the joint is destroyed
-			Debug.Log ("Broken");
+//			Debug.Log ("Broken");
 
 
 		}

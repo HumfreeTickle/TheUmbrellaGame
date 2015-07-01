@@ -28,7 +28,7 @@ public class CreateWind : MonoBehaviour
 
 		instatiatedWind = Instantiate (windSystem, spawnDistance, Quaternion.Euler (Vector3.forward)) as GameObject;
 		instatiatedWind.transform.parent = this.transform;                             
-		instatiatedWind.GetComponent<wind> ().windForce = 1000;
+		instatiatedWind.GetComponent<wind> ().windForce = 2000;
 	}
 
 	void SummonWind ()
@@ -52,6 +52,5 @@ public class CreateWind : MonoBehaviour
 	{
 		_timer += Time.fixedDeltaTime;
 		charge = Mathf.Clamp (_timer, 0, 40) * 100;
-		print (_timer);
 	}
 }

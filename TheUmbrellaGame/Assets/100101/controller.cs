@@ -56,29 +56,21 @@ public class controller : MonoBehaviour
 	{
 		// needs to keep using the absolute value so the player can rock back and forth to gain height
 		// after we work out how wind is going to work then it can change
-<<<<<<< HEAD
-		if (Mathf.Abs(Input.GetAxis ("Vertical")) > 0) { // Probably should only use forward for this and have back be a kind of breaking system
-			rb.AddForce (transform.forward * Input.GetAxis ("Vertical") * speed, theForce); //Add force in the direction it is facing
-=======
 		if (Input.GetAxis ("Vertical_L") > 0) { // Probably should only use forward for this and have back be a kind of breaking system
-			print ("Vertical_L");
 			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
 		}
 		if (Input.GetAxis ("Vertical_L") < 0) { // Probably should only use forward for this and have back be a kind of breaking system
 			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L"), backwardForce); //Add force in the direction it is facing
->>>>>>> 98d3c4bb827018016faa09b31a0e5acfc562715b
 		}
 
 		if (Mathf.Abs (Input.GetAxis ("Horizontal_L")) > 0) { //This shoould rotate the player rather than move sideways
 			rb.AddTorque (transform.up * Input.GetAxis ("Horizontal_L") * turningSpeed, rotationForce);
-			print ("Horizontal_L");
 		} else {
 			rb.angularVelocity = Vector3.Lerp (rb.angularVelocity, Vector3.zero, Time.deltaTime * 10);
 		}
 	}
 
-	void HorizontalMass ()
-	{
+	void HorizontalMass (){
 		if (Input.GetAxisRaw ("Horizontal_L") < 0) {
 			leftsphere.mass = lsphereMass + forceApplied;
 		} else if (Input.GetAxisRaw ("Horizontal_L") > 0) {

@@ -94,6 +94,7 @@ public class cameraControl : MonoBehaviour {
 
 	void horizontalMovement(){
 		if(Mathf.Abs(Input.GetAxis("Horizontal_R")) > 0){
+			print ("H_R");
 			transform.RotateAround(umbrella.position, Vector3.up, Input.GetAxis("Horizontal_R") * rotationSpeed * Time.deltaTime);
 		}
 	}

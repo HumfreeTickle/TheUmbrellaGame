@@ -1,27 +1,46 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GmaeManage : MonoBehaviour {
-
+public class GmaeManage : MonoBehaviour
+{
 	
-	//Adds a timer to the game to end gameplay after 2 minutes (When the kitten has been completed)
-	//Restarting game with a series of keys
+	private bool pauseGame;
 	
-	
-	void Update () {
-		RestartGame();
+	void Update ()
+	{
+		RestartGame ();
+		PauseGame ();
 	}
 	
-	void StartGame(){
+	void StartGame ()
+	{
 		//Fades in from white
 	}
 	
-	void EndGame(){
+	void EndGame ()
+	{
 		//Fades out to white
 	}
+
+	void PauseGame ()
+	{
+		if (Input.GetButtonDown ("Submit")) {
+			pauseGame = !pauseGame;
+		}
+		if (pauseGame) {
+			if (Time.timeScale > 0.1f) {
+				Time.timeScale -= Time.fixedDeltaTime*2;
+			}else{
+				Time.timeScale = 0;
+			}
+		} else {
+			Time.timeScale = 1;
+		}
+	}
 	
-	void RestartGame(){
-		if(Input.GetKeyDown(KeyCode.R)){
+	void RestartGame ()
+	{
+		if (Input.GetKeyDown (KeyCode.R)) {
 			Application.LoadLevel ("Boucing");
 		}
 		//Fades to white

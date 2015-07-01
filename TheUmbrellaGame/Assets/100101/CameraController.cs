@@ -11,40 +11,20 @@ public class CameraController : MonoBehaviour {
 	public float distance = 10;
 	public float height = 1;
 
-<<<<<<< HEAD
 	private float umbrellaRotation; //Holds the umbrella's y axis rotation
 	private float umbrellaHeight; //Holds the umbrella's y axis position
 
 	private float currentRotationAngle; // current rotation along the y axis
-=======
+
+
 	private float umbrellaRotationY; //Holds the umbrella's y axis rotation
 	private float umbrellaRotaionX; //Holds the umbrella's x axis rotation
-	private float umbrellaHeight; //Holds the umbrella's y axis position
 
 	private float currentRotationAngleY; // current rotation along the y axis
 	private float currentRotationAngleX; // current rotation along the x axis
->>>>>>> 98d3c4bb827018016faa09b31a0e5acfc562715b
 	private float currentHeight; // current position along the y axis
 
 	private Quaternion currentRotation;
-
-<<<<<<< HEAD
-	void LateUpdate(){
-
-		//Sets all the variables
-		umbrellaRotation = umbrella.eulerAngles.y;
-		umbrellaHeight = umbrella.position.y;
-		currentRotationAngle = transform.eulerAngles.y;
-		currentHeight = transform.position.y;
-		
-		//Smoothly transitions between the camera and the umbrella
-		currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, umbrellaRotation, smoothing * Time.deltaTime);
-		currentHeight = Mathf.Lerp(currentHeight, umbrellaHeight + height, smoothing * Time.deltaTime); // This is jst for rising and falling
-		
-		currentRotation = Quaternion.Euler (0, currentRotationAngle, 0); 
-		
-=======
-	//**** something is making the camera jerk about awkwardly. But only really when the umbrella is moving upwards. ****
 
 	void LateUpdate(){
 
@@ -67,7 +47,6 @@ public class CameraController : MonoBehaviour {
 		currentHeight = Mathf.Lerp(currentHeight, umbrellaHeight + height, smoothing * Time.deltaTime); // This is jst for rising and falling
 		currentRotation = Quaternion.Euler (0, currentRotationAngleY, 0); 
 
->>>>>>> 98d3c4bb827018016faa09b31a0e5acfc562715b
 		//Actually moves the camera into position
 		transform.position = umbrella.position;
 		transform.position -= currentRotation * Vector3.forward * distance;
@@ -75,14 +54,11 @@ public class CameraController : MonoBehaviour {
 		
 		// Always look at the target
 		transform.LookAt (whatToLookAt); // Handy little thing, without it the camera just follows the umbrella awkwardly
-<<<<<<< HEAD
 		
 		//Changes how smoothly movement is (Probably shouldn't go higher that 1
 		smoothing = Mathf.Clamp(smoothSpeed, -1, 1);
 //		print (currentRotation);
-=======
 		//Changes how smoothly movement is (Probably shouldn't go higher that 1)
 		smoothing = Mathf.Clamp(smoothSpeed, -1, 1);
->>>>>>> 98d3c4bb827018016faa09b31a0e5acfc562715b
 	}
 }
