@@ -1,13 +1,20 @@
 ﻿// WATCH FULL EXPLANATION ON YOUTUBE-VIDEO: https://www.youtube.com/watch?v=3qBDTh9zWrQ
  
+//need to find out where in the code the outline is made 
+ 
 Shader "Our Toonshader Vol. 3" {
    Properties {
     _Color ("Diffuse Material Color", Color) = (1,1,1,1) //main colour
     _UnlitColor ("Unlit Color", Color) = (0.5,0.5,0.5,1) //shadow colour
     _DiffuseThreshold ("Lighting Threshold", Range(-1.1,1)) = 0.1 //the amount of shadow on the object
+    
+    // gonna ignore this part since I'm not to keen on having a shine on the objects
     _SpecColor ("Specular Material Color", Color) = (1,1,1,1)
     _Shininess ("Shininess", Range(0.5,1)) = 1 
+    
+    
     _OutlineThickness ("Outline Thickness", Range(0,1)) = 0.1
+    //the AK47 part kinda worries me that this is a very specific shader
     _MainTex ("Main Texture", 2D) = "AK47" {}
            
         }
@@ -21,6 +28,7 @@ Shader "Our Toonshader Vol. 3" {
        
         #pragma vertex vert
         //tells the cg to use a vertex-shader called vert
+        
         #pragma fragment frag
         //tells the cg to use a fragment-shader called frag
        
@@ -30,7 +38,7 @@ Shader "Our Toonshader Vol. 3" {
         uniform float4 _Color;
         uniform float4 _UnlitColor;
         uniform float _DiffuseThreshold;
-        uniform float4 _SpecColor;
+        uniform float4 _SpecColor; //can ignore
         uniform float _Shininess;
         uniform float _OutlineThickness;
      
@@ -63,10 +71,10 @@ Shader "Our Toonshader Vol. 3" {
                 vertexOutput output;
                
                 //normalDirection
-                output.normalDir = normalize ( mul( float4( input.normal, 0.0 ), _World2Object).xyz );
+                output.normalDir = normalize ( mul( float4( input.normal, 0.0 ), _World2Object).xyz ); // transforms normals to worldspace
                
                 //World position
-                float4 posWorld = mul(_Object2World, input.vertex);
+                float4 posWorld = mul(_Object2World, input.vertex); //local space position
                
                 //view direction
                 output.viewDir = normalize( _WorldSpaceCameraPos.xyz - posWorld.xyz ); //vector from object to the camera
@@ -91,12 +99,13 @@ Shader "Our Toonshader Vol. 3" {
         float4 frag(vertexOutput input) : COLOR
         {
  
-        float nDotL = saturate(dot(input.normalDir, input.lightDir.xyz));
+        float nDotL = saturate(dot(input.normalDir, input.lightDir.xyz)); //gets the dot product and restricts it (saturate) between 0,1
                        
         //Diffuse threshold calculation
-        float diffuseCutoff = saturate( ( max(_DiffuseThreshold, nDotL) - _DiffuseThreshold ) *1000 );
+        float diffuseCutoff = saturate( ( max(_DiffuseThreshold, nDotL) - _DiffuseThreshold ) *1000 ); // the 1000 gives it a hard edge rather then a gradual fade
                        
         //Specular threshold calculation
+        // not needed :) Has to do with shiny things
         float specularCutoff = saturate( max(_Shininess, dot(reflect(-input.lightDir.xyz, input.normalDir), input.viewDir))-_Shininess ) * 1000;
                        
         //Calculate Outlines

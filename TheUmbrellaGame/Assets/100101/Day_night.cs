@@ -5,11 +5,11 @@ public class Day_night : MonoBehaviour
 {
 
 	public int nightSpeed; //Speed the light rotate at.
-	private Light sun;
+//	private Light sun;
 
 	void Start ()
 	{
-		sun = GetComponent<Light> ();
+//		sun = GetComponent<Light> ();
 	}
 	// Update is called once per frame
 	void Update ()

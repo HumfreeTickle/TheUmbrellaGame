@@ -23,7 +23,7 @@ public class controller : MonoBehaviour
 	private float bsphereMass;
 	private float rbMass;
 	private float handleMass;
-	public float forceApplied;
+	public float forceAppliedToTilt; // used fro tilting purposes
 	public float speed;
 	public float floating;
 	public float turningSpeed;
@@ -47,20 +47,24 @@ public class controller : MonoBehaviour
 	void FixedUpdate ()
 	{
 		Movement ();
-		HorizontalMass ();
-		VerticalMass ();
+//		HorizontalMass ();
+//		VerticalMass ();
 		TheDescent ();
 	}
 
 	void Movement ()
 	{
+
+		//*** _____ The direction the umbrella is moving in is an arc, regardless of the force applied ______ ***
+		//*** _____ So I need to figure out a way to keep the movement vector going in the same direction ___ ***
+
 		// needs to keep using the absolute value so the player can rock back and forth to gain height
 		// after we work out how wind is going to work then it can change
 		if (Input.GetAxis ("Vertical_L") > 0) { // Probably should only use forward for this and have back be a kind of breaking system
 			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
 		}
 		if (Input.GetAxis ("Vertical_L") < 0) { // Probably should only use forward for this and have back be a kind of breaking system
-			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L"), backwardForce); //Add force in the direction it is facing
+			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L"), movementForce); //Add force in the direction it is facing
 		}
 
 		if (Mathf.Abs (Input.GetAxis ("Horizontal_L")) > 0) { //This shoould rotate the player rather than move sideways
@@ -72,9 +76,9 @@ public class controller : MonoBehaviour
 
 	void HorizontalMass (){
 		if (Input.GetAxisRaw ("Horizontal_L") < 0) {
-			leftsphere.mass = lsphereMass + forceApplied;
+			leftsphere.mass = lsphereMass + forceAppliedToTilt;
 		} else if (Input.GetAxisRaw ("Horizontal_L") > 0) {
-			rightsphere.mass = rsphereMass + forceApplied;
+			rightsphere.mass = rsphereMass + forceAppliedToTilt;
 		} else if (Input.GetAxisRaw ("Horizontal_L") == 0) {
 			leftsphere.mass = lsphereMass;
 			rightsphere.mass = rsphereMass;
@@ -84,10 +88,10 @@ public class controller : MonoBehaviour
 	void VerticalMass ()
 	{
 		if (Input.GetAxisRaw ("Vertical_L") > 0) {
-			frontsphere.mass = fsphereMass + forceApplied;
-			handle.mass = handleMass + forceApplied / 2;
+			frontsphere.mass = fsphereMass + forceAppliedToTilt;
+			handle.mass = handleMass + forceAppliedToTilt / 2;
 		} else if (Input.GetAxisRaw ("Vertical_L") < 0) {
-			backsphere.mass = bsphereMass + forceApplied * 2;
+			backsphere.mass = bsphereMass + forceAppliedToTilt * 2;
 		} else if (Input.GetAxisRaw ("Vertical_L") == 0) {
 			frontsphere.mass = fsphereMass;
 			backsphere.mass = bsphereMass;

@@ -1,10 +1,17 @@
 Shader "Toon/Basic Outline" {
 	Properties {
-		_Color ("Main Color", Color) = (.5,.5,.5,1)
-		_OutlineColor ("Outline Color", Color) = (0,0,0,1)
-		_Outline ("Outline width", Range (.002, 0.03)) = .005
-		_MainTex ("Base (RGB)", 2D) = "white" { }
-		_ToonShade ("ToonShader Cubemap(RGB)", CUBE) = "" { }
+		_Color ("Main Color", Color) = (.5,.5,.5,1) //Standard colour of the texture
+		//to be honest the outline is the main problem with this shader hence why I'm changing it
+		_OutlineColor ("Outline Color", Color) = (0,0,0,1) //What the outline colour should be, can't remember if this can be changed or not
+		_Outline ("Outline width", Range (.002, 0.03)) = .005 //width of the outline
+		//Quickly looking at the two shows that the outline i svery different
+		//The youtube cell shader uses only an outline width
+		
+		
+		_MainTex ("Base (RGB)", 2D) = "white" { } 
+		
+		
+		_ToonShade ("ToonShader Cubemap(RGB)", CUBE) = "" { } //this needs to go into the new shader
 	}
 	
 	CGINCLUDE
