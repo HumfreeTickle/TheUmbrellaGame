@@ -18,7 +18,7 @@ public class CreateWind : MonoBehaviour
 		if (Input.GetButtonDown ("Fire1") && transform.childCount == 0) {
 			SummonWind ();
 		}
-		Charging ();
+//		Charging ();
 		Mathf.Clamp (_timer, 0, 20);
 	}
 
@@ -50,6 +50,7 @@ public class CreateWind : MonoBehaviour
 
 	void Charging ()
 	{
+
 		_timer += Time.fixedDeltaTime;
 		charge = Mathf.Clamp (_timer, 0, 40) * 100;
 	}

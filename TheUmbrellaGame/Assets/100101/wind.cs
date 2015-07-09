@@ -26,7 +26,6 @@ public class wind : MonoBehaviour {
 
 	void OnParticleCollision(GameObject umbrella){
 		if(umbrella.name == "main_Sphere"){
-			print ("Hit");
 			umbrella.GetComponent<Rigidbody>().AddForce(Vector3.up * windForce);
 		}
 	}
