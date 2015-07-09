@@ -7,7 +7,7 @@ public class upwardForce : MonoBehaviour {
 	private Rigidbody rb;
 
 	public float conterBalance = 1;
-	private float mainMass;
+//	private float mainMass;
 
 	private float sw;
 	public float sine;
@@ -16,7 +16,7 @@ public class upwardForce : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
-		mainMass = rb.mass;
+//		mainMass = rb.mass;
 
 	}
 	

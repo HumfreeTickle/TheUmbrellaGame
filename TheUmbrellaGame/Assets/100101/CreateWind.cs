@@ -19,6 +19,14 @@ public class CreateWind : MonoBehaviour
 			SummonWind ();
 			charge -=  10; //Mathf.Lerp (charge, 0, Time.time/10);
 		}
+
+		if(charge <= 1){
+			GetComponent<upwardForce>().enabled = false;
+
+			//this needs to be changed
+		}else{
+			GetComponent<upwardForce>().enabled = true;
+		}
 //		Charging ();
 		Mathf.Clamp (_timer, 0, 20);
 	}

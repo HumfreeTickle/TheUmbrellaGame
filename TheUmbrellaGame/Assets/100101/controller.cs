@@ -101,14 +101,16 @@ public class controller : MonoBehaviour
 
 	void TheDescent ()
 	{
-//		Mathf.Clamp(rb.mass, 1, 20);
+
 		if (Input.GetButtonDown("Fire2")) {
-			rb.mass *= 100;
-//			rb.mass = Mathf.Clamp(rb.mass, 1, 40);
+			//check create wind script
+			Debug.Log (GetComponent<upwardForce>().isActiveAndEnabled);
+			GetComponent<upwardForce>().enabled = !GetComponent<upwardForce>().enabled ;
+//			rb.mass *= 100;
 		} 
-		if (Input.GetButtonUp("Fire2")) {
-//			rb.AddForce(Vector3.up * 2000);
-			rb.mass = rbMass;
-		}
+//		if (Input.GetButtonUp("Fire2")) {
+//			GetComponent<upwardForce>().enabled = true;
+////			rb.mass = rbMass;
+//		}
 	}
 }
