@@ -8,24 +8,23 @@ public class whiteOut : MonoBehaviour
 	public float speed = 0.5f;
 	public float _timer;
 	private Image _image;
+	private GameObject gmeaOVer;
 
-	// Use this for initialization
 	void Start ()
 	{
 		whiteIN = GetComponent<Image> ().color;
 		whiteIN = Color.white;
-		_image = GetComponent<Image>();
+		_image = GetComponent<Image> ();
+		gmeaOVer = GameObject.Find("Follow Camera");
 	}
 	
-	// Update is called once per frame
 	void Update ()
 	{
 		startWhite ();
-//		_timer += Time.deltaTime;
-//		if (_timer >= 360) {
-//			endWhite ();
-//		}
 		_image.color = whiteIN;
+		if(gmeaOVer.GetComponent<GmaeManage>().Timer > 2){
+			endWhite();
+		}
 	}
 
 	void startWhite ()
@@ -35,9 +34,14 @@ public class whiteOut : MonoBehaviour
 
 	void endWhite ()
 	{
-		whiteIN.a = Mathf.Lerp (whiteIN.a, 5, Time.deltaTime * speed);
+		whiteIN.a = Mathf.Lerp (whiteIN.a, 2, Time.deltaTime * speed);
 		if (whiteIN.a >= 0.95) {
-			Application.LoadLevel ("Boucing");
+			if (Application.loadedLevel == 0) {
+				Application.LoadLevel ("Boucing");
+			}
+			else if(Application.loadedLevel == 1){
+				Application.LoadLevel ("Start_Screen");
+			}
 		}
 	}
 }

@@ -21,7 +21,7 @@ public class controller : MonoBehaviour
 	private float rsphereMass;
 	private float fsphereMass;
 	private float bsphereMass;
-	private float rbMass;
+//	private float rbMass;
 	private float handleMass;
 	public float forceAppliedToTilt; // used for tilting purposes
 	public float speed;
@@ -31,7 +31,7 @@ public class controller : MonoBehaviour
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody> ();
-		rbMass = rb.mass;
+//		rbMass = rb.mass;
 		lsphereMass = leftsphere.mass;
 		rsphereMass = rightsphere.mass;
 		fsphereMass = frontsphere.mass;

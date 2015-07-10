@@ -5,11 +5,22 @@ public class GmaeManage : MonoBehaviour
 {
 	
 	private bool pauseGame;
-	
+	private bool gameOver;
+	private GameObject cameraController;
+	private float _gameOverTimer;
+
+	public float Timer{
+		get{
+			return _gameOverTimer;
+		}
+	}
+
 	void Update ()
 	{
+		gameOver = GetComponent<cameraControl>().DeadDead;
 		RestartGame ();
 		PauseGame ();
+		EndGame ();
 	}
 	
 	void StartGame ()
@@ -19,7 +30,10 @@ public class GmaeManage : MonoBehaviour
 	
 	void EndGame ()
 	{
-		//Fades out to white
+		if(gameOver){
+			_gameOverTimer += Time.deltaTime;
+		}
+
 	}
 
 	void PauseGame ()

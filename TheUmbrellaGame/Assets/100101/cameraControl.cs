@@ -10,6 +10,17 @@ public class cameraControl : MonoBehaviour
 	public float zAway;
 	public float restrictAngle;
 	public bool annoyingRotation;
+	private bool deadDead;
+
+	public bool DeadDead {
+		get {
+			return deadDead;
+		}
+
+		set {
+			deadDead = value;
+		}
+	}
 
 	private float rotationClamp (float angle, float min, float max)
 	{
@@ -24,25 +35,24 @@ public class cameraControl : MonoBehaviour
 		return angle;
 	}
 
-
-	// Use this for initialization
 	void Start ()
 	{
 		transform.position = umbrella.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
 		transform.LookAt (umbrella);
 	}
 
-
-//	void OnCollisionStay(){
-//		print ("Hit");
-//			rotationThisWay = false;
-//	}
-
 	void LateUpdate ()
 	{
-		transform.position = umbrella.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));//Vector3.Scale(umbrella.position, new Vector3(1, 0, 1)).normalized;
-		RotateYaw ();
-		RotatePitch ();
+		if (!deadDead) {
+			transform.position = umbrella.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
+			RotateYaw ();
+			RotatePitch ();
+		} else {
+			if (GetComponent<GmaeManage> ().Timer > 2) {
+				transform.position = transform.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
+			}
+			transform.LookAt (umbrella);
+		}
 
 	}
 	

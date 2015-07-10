@@ -12,11 +12,11 @@ public class CreateWind : MonoBehaviour
 	private Material umbrellaColour;
 	private Vector3 baseUmbrella = new Vector3 (0f, -5f, 0f);
 	private GameObject umbrella;
-	private LayerMask ignoremask;
+	private GameObject cameraControl;
 
 	void Start ()
 	{
-		ignoremask = LayerMask.NameToLayer ("Player");
+		cameraControl = GameObject.Find("Follow Camera");
 		umbrella = GameObject.Find ("Umbrella");
 		umbrellaColour = umbrella.GetComponent<Renderer> ().material;
 	}
@@ -26,7 +26,7 @@ public class CreateWind : MonoBehaviour
 
 		if (Input.GetButtonDown ("CrateWind") && charge >= 1) {
 			SummonWind ();
-			charge = Mathf.Lerp (charge, 0, Time.fixedDeltaTime* 10);
+			charge = Mathf.Lerp (charge, 0, Time.fixedDeltaTime * 10);
 		}
 
 		//---------------- TURN OFF UPWARDFORCE ---------------------
@@ -59,14 +59,14 @@ public class CreateWind : MonoBehaviour
 			//------------- CONDITIONS ----------------------------
 			if (hit.collider.tag == "Terrain" && hit.distance < maxTerrainDistance) {
 				charge = Mathf.Lerp (charge, 100, Time.time / (hit.distance * 100));
-			} else {
-				Debug.Log ("charge is going down");
-				charge = Mathf.Lerp (charge, 0, Time.deltaTime);
 			}
 
-			if(hit.collider == null){
-				GetComponent<Rigidbody> ().drag = Mathf.Lerp(GetComponent<Rigidbody> ().drag, 20, Time.fixedDeltaTime/10);
+		} else {
+			charge = Mathf.Lerp (charge, 0, Time.deltaTime);
+			if(charge <= 1){
+				cameraControl.GetComponent<cameraControl>().DeadDead = true;
 			}
+//			GetComponent<Rigidbody> ().drag = Mathf.Lerp (GetComponent<Rigidbody> ().drag, 20, Time.fixedDeltaTime / 10);
 		}
 	}
 
