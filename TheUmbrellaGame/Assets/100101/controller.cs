@@ -23,7 +23,7 @@ public class controller : MonoBehaviour
 	private float bsphereMass;
 	private float rbMass;
 	private float handleMass;
-	public float forceAppliedToTilt; // used fro tilting purposes
+	public float forceAppliedToTilt; // used for tilting purposes
 	public float speed;
 	public float floating;
 	public float turningSpeed;
@@ -46,11 +46,16 @@ public class controller : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
+
 		Movement ();
-//		HorizontalMass ();
-//		VerticalMass ();
-		TheDescent ();
+		HorizontalMass ();
+		VerticalMass ();
+		if (Input.GetButtonDown ("DropFromSky")) {
+			TheDescent ();
+		}
 	}
+
+	//----------------------------- OTHER FUNCTIONS ------------------------------------------------------------------------
 
 	void Movement ()
 	{
@@ -74,7 +79,8 @@ public class controller : MonoBehaviour
 		}
 	}
 
-	void HorizontalMass (){
+	void HorizontalMass ()
+	{
 		if (Input.GetAxisRaw ("Horizontal_L") < 0) {
 			leftsphere.mass = lsphereMass + forceAppliedToTilt;
 		} else if (Input.GetAxisRaw ("Horizontal_L") > 0) {
@@ -101,14 +107,6 @@ public class controller : MonoBehaviour
 
 	void TheDescent ()
 	{
-//		Mathf.Clamp(rb.mass, 1, 20);
-		if (Input.GetButtonDown("Fire2")) {
-			rb.mass *= 100;
-//			rb.mass = Mathf.Clamp(rb.mass, 1, 40);
-		} 
-		if (Input.GetButtonUp("Fire2")) {
-//			rb.AddForce(Vector3.up * 2000);
-			rb.mass = rbMass;
-		}
+		GetComponent<upwardForce> ().enabled = !GetComponent<upwardForce> ().enabled;
 	}
 }
