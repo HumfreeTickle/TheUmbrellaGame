@@ -16,6 +16,8 @@ public class wind : MonoBehaviour {
 		Death();
 	}
 
+	//----------------------------- OTHER FUNCTIONS ------------------------------------------------------------------------
+
 	void umbrellaFalls(){ //this was to make it a once off thing
 		if(umbrellaObject.position.y <= 20){
 			GetComponent<ParticleSystem>().enableEmission = true;

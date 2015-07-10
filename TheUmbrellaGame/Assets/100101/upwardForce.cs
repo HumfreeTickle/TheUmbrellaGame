@@ -27,6 +27,8 @@ public class upwardForce : MonoBehaviour {
 		rb.AddForce (force, theForce);
 	}
 
+	//----------------------------- OTHER FUNCTIONS ------------------------------------------------------------------------
+
 	void SineWave(){
 		if(sine >= (Mathf.Sin(Mathf.PI/2))){
 			sine = 0;
