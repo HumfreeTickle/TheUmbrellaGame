@@ -16,6 +16,9 @@ public class controller : MonoBehaviour
 	public ForceMode backwardForce;
 	public ForceMode rotationForce;
 	public Rigidbody handle;
+
+	public Transform movement;
+
 	private Rigidbody rb;
 	private float lsphereMass;
 	private float rsphereMass;
@@ -48,8 +51,8 @@ public class controller : MonoBehaviour
 	{
 
 		Movement ();
-		HorizontalMass ();
-		VerticalMass ();
+//		HorizontalMass ();
+//		VerticalMass ();
 		if (Input.GetButtonDown ("DropFromSky")) {
 			TheDescent ();
 		}
@@ -65,10 +68,14 @@ public class controller : MonoBehaviour
 
 		// needs to keep using the absolute value so the player can rock back and forth to gain height
 		// after we work out how wind is going to work then it can change
-		if (Input.GetAxis ("Vertical_L") > 0) { // Probably should only use forward for this and have back be a kind of breaking system
-			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
-		}
-		if (Input.GetAxis ("Vertical_L") < 0) { // Probably should only use forward for this and have back be a kind of breaking system
+		if (Input.GetAxis ("Vertical_L") > 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
+			rb.AddForce (transform.TransformDirection(movement.forward) * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
+		} 
+//		else if (Input.GetAxis ("Vertical_L") > 0.5f){
+//			rb.AddForce (transform.position * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
+//
+//		}
+		if (Input.GetAxis ("Vertical_L") < 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
 			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L"), movementForce); //Add force in the direction it is facing
 		}
 
