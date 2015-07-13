@@ -57,7 +57,6 @@ public class GmaeManage : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.R)) {
 			Application.LoadLevel ("Boucing");
 		}
-		//Fades to white
-		//Call StartGame()
+
 	}
 }
