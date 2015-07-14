@@ -12,7 +12,7 @@ public class Barriers : MonoBehaviour
 		if (barrier.tag == "Player") {
 
 			barrier.GetComponent<Rigidbody>().AddForce(knockBack * directionOfForce);
-			barrier.GetComponent<Rigidbody> ().drag = Mathf.Lerp(barrier.GetComponent<Rigidbody> ().drag, 20, Time.fixedDeltaTime/10);
+			barrier.GetComponent<Rigidbody> ().drag = Mathf.Lerp(barrier.GetComponent<Rigidbody> ().drag, 10, Time.fixedDeltaTime/10);
 
 		}
 	}

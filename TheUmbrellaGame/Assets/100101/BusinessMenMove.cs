@@ -10,15 +10,15 @@ public class BusinessMenMove : MonoBehaviour
 
 	void Update ()
 	{
-		if(transform.position == destination[startingDestination].position){
-			startingDestination ++;
+		if (transform.position == destination [startingDestination].position) {
+			if (startingDestination >= destination.Length - 1) {
+				startingDestination = 0;
+			} else {
+				startingDestination ++;
+			}
 		}
 
-		if(startingDestination >= destination.Length){
-			startingDestination = 0;
-		}
-
-		transform.position = Vector3.MoveTowards(transform.position, destination[startingDestination].position, moveSpeed *Time.deltaTime);
+		transform.position = Vector3.MoveTowards (transform.position, destination [startingDestination].position, moveSpeed * Time.deltaTime);
 
 	}
 }
