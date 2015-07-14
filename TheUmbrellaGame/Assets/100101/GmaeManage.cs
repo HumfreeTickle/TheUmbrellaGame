@@ -20,7 +20,7 @@ public class GmaeManage : MonoBehaviour
 	{
 		gameOver = GetComponent<cameraControl>().DeadDead;
 		RestartGame ();
-		PauseGame ();
+//		PauseGame ();
 		EndGame ();
 	}
 	
