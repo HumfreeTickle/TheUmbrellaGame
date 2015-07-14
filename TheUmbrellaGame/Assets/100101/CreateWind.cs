@@ -33,9 +33,10 @@ public class CreateWind : MonoBehaviour
 		if (charge <= 1) {
 			GetComponent<upwardForce> ().enabled = false;
 
-		} else {
-			GetComponent<upwardForce> ().enabled = true;
-		}
+		} 
+//		else {
+//			GetComponent<upwardForce> ().enabled = true;
+//		}
 
 //---------------------------- COLOUR CHANGING ------------------------------------------------------------------------
 

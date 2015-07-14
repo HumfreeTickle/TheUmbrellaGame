@@ -8,23 +8,23 @@ public class whiteOut : MonoBehaviour
 	public float speed = 0.5f;
 	public float _timer;
 	private Image _image;
-//	private GameObject gmeaOVer;
+	private GameObject gmeaOVer;
 
 	void Start ()
 	{
 		whiteIN = GetComponent<Image> ().color;
 		whiteIN = Color.white;
 		_image = GetComponent<Image> ();
-//		gmeaOVer = GameObject.Find("Follow Camera");
+		gmeaOVer = GameObject.Find("Follow Camera");
 	}
 	
 	void Update ()
 	{
 		startWhite ();
 		_image.color = whiteIN;
-//		if(gmeaOVer.GetComponent<GmaeManage>().Timer > 2){
-//			endWhite();
-//		}
+		if(gmeaOVer.GetComponent<GmaeManage>().Timer > 2){
+			endWhite();
+		}
 	}
 
 	void startWhite ()

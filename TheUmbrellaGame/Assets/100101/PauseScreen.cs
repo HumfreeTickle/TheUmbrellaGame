@@ -6,7 +6,8 @@ public class PauseScreen : MonoBehaviour
 {
 
 
-	private float Timer;
+	public float Timer;
+	private float _timer;
 	private GameObject Greyness;
 	public bool isPaused;
 	private Image GreyFade;
@@ -17,8 +18,7 @@ public class PauseScreen : MonoBehaviour
 
 	void Start ()
 	{
-
-		Timer = 200f;//this is the timer to pause the game if no input is detected
+		_timer = Timer;
 		isPaused = false;
 		GreyFade = GetComponent<Image> ();
 		fader = GetComponent<Image> ().color;
@@ -58,11 +58,9 @@ public class PauseScreen : MonoBehaviour
 		}
 		Debug.Log (Time.timeScale);
 
-		if (Input.GetKeyDown (KeyCode.B)) {
+		if (Input.GetButtonDown ("Submit")) {
 			
 			isPaused = !isPaused;//!isPaused;//toggle between the 2 pause statements
-			Debug.Log ("ItsSwitching");
-
 		}
 
 
@@ -74,19 +72,18 @@ public class PauseScreen : MonoBehaviour
 
 		if (!Input.anyKey) {
 			
-			Timer --;
-			Debug.Log ("NothingHappening");
-			
+			_timer -= Time.fixedDeltaTime;
+
 		}
 		
-		if (Timer == 0f) {
+		if (_timer <= 0) {
 			
 			isPaused = true;//when the timer reaches 0 then the pause screen will activate
 		}
 		
 		if (Input.anyKey) {
 			
-			Timer = 200f;//once a key is pressed the timer should revert back to 500
+			_timer = Timer;//once a key is pressed the timer should revert back to 500
 		}
     
 	}
