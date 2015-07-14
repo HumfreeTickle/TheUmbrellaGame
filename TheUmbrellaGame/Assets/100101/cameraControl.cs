@@ -47,12 +47,13 @@ public class cameraControl : MonoBehaviour
 			transform.position = umbrella.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
 			RotateYaw ();
 			RotatePitch ();
-		} else {
-			if (GetComponent<GmaeManage> ().Timer > 2) {
-				transform.position = transform.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
-			}
-			transform.LookAt (umbrella);
-		}
+		} 
+			//else {
+////			if (GetComponent<GmaeManage> ().Timer > 2) {
+////				transform.position = transform.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
+//			}
+//			transform.LookAt (umbrella);
+//		}
 
 	}
 	

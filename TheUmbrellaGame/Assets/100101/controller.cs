@@ -68,6 +68,7 @@ public class controller : MonoBehaviour
 
 		// needs to keep using the absolute value so the player can rock back and forth to gain height
 		// after we work out how wind is going to work then it can change
+
 		if (Input.GetAxis ("Vertical_L") > 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
 			rb.AddForce (transform.TransformDirection(movement.forward) * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
 		} 
@@ -76,7 +77,22 @@ public class controller : MonoBehaviour
 //
 //		}
 		if (Input.GetAxis ("Vertical_L") < 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
+
+
+
+
+		if (Input.GetAxis ("Vertical_L") > 0) { // Probably should only use forward for this and have back be a kind of breaking system
+			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
+		}
+		if (Input.GetAxis ("Vertical_L") < 0) { // Probably should only use forward for this and have back be a kind of breaking system
+
 			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L"), movementForce); //Add force in the direction it is facing
+
+			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L"), backwardForce); //Add force in the direction it is facing
+
+
+			rb.AddForce (transform.forward * Input.GetAxis ("Vertical_L"), movementForce); //Add force in the direction it is facing
+
 		}
 
 		if (Mathf.Abs (Input.GetAxis ("Horizontal_L")) > 0) { //This shoould rotate the player rather than move sideways
@@ -84,6 +100,7 @@ public class controller : MonoBehaviour
 		} else {
 			rb.angularVelocity = Vector3.Lerp (rb.angularVelocity, Vector3.zero, Time.deltaTime * 10);
 		}
+	}
 	}
 
 	void HorizontalMass ()
@@ -117,3 +134,4 @@ public class controller : MonoBehaviour
 		GetComponent<upwardForce> ().enabled = !GetComponent<upwardForce> ().enabled;
 	}
 }
+

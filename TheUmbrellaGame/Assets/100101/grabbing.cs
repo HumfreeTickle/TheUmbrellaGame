@@ -12,11 +12,23 @@ public class grabbing : MonoBehaviour
 	{
 
 		if(transform.childCount > 0){
+
 			if (Input.GetButtonDown ("Fire3")) {
+
+
+
+
+			if (Input.GetButtonDown ("Fire3")) {
+
+
+			if (Input.GetButtonDown ("Fire3")) {
+
 				JumpKey = !JumpKey;
 			}
 			Detachment ();
 		}
+	}
+}
 	}
 		
 	void Detachment ()
