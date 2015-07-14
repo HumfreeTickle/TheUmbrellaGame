@@ -28,44 +28,21 @@ public class PauseScreen : MonoBehaviour
 	
 	void Update ()
 	{
-		if (!isPaused) {
-			
-			Time.timeScale = 1f;//runs at regular time
-			FadeOut ();
-			Debug.Log ("NotPaused");
-			GreyFade.color = fader;
-			
-		}
-		
-		if (isPaused) {
-			
-			Time.timeScale = 0f;
-			FadeIn ();
-			Debug.Log ("Paused");
-			GreyFade.color = fader;
-			
-			
-			if (Input.GetKeyDown (KeyCode.L)) {
-				
-				Application.LoadLevel ("Start_Screen");
-			}
-			if (Input.GetKeyDown (KeyCode.R)) {
-				Application.LoadLevel ("Boucing");
-			}
-			
-			
-			
-		}
-		Debug.Log (Time.timeScale);
-
 		if (Input.GetButtonDown ("Submit")) {
-			
 			isPaused = !isPaused;//!isPaused;//toggle between the 2 pause statements
 		}
 
-
-
+		if (!isPaused) {
+			NotPaused();
+		}
+		
+		if (isPaused) {
+			Paused ();
+		}
 	}
+
+//---------------------------- So the timer stops counting when paused -----------------------------------------------------------------------
+
 
 	void FixedUpdate ()
 	{
@@ -87,6 +64,33 @@ public class PauseScreen : MonoBehaviour
 		}
     
 	}
+
+//---------------------------- Pausing Functions -----------------------------------------------------------------------
+
+
+	void Paused(){
+		Time.timeScale = 0f;
+		FadeIn ();
+		GreyFade.color = fader;
+		
+		
+		if (Input.GetKeyDown (KeyCode.L)) {
+			
+			Application.LoadLevel ("Start_Screen");
+		}
+		if (Input.GetKeyDown (KeyCode.R)) {
+			Application.LoadLevel ("Boucing");
+		}
+	}
+
+	void NotPaused(){
+		Time.timeScale = 1f;//runs at regular time
+		FadeOut ();
+		GreyFade.color = fader;
+	}
+
+//---------------------------- Image Fades -----------------------------------------------------------------------
+
 
 	void FadeIn ()
 	{

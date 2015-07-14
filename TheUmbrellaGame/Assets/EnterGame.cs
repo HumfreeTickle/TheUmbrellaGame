@@ -39,5 +39,12 @@ public class EnterGame : MonoBehaviour
 	{
 		whitey.a = Mathf.Lerp (whitey.a, 1, Time.deltaTime * speed);
 		whiteIN.color = whitey;
+		Invoke ("whichLevel", 3); //delays the loading of Level-1
+
+	}
+		
+	void whichLevel ()
+	{
+		Application.LoadLevel (1); //Changes to the next scene
 	}
 }

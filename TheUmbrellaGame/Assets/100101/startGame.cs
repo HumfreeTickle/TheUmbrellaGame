@@ -32,7 +32,7 @@ public class startGame : MonoBehaviour {
 
 	void Update(){
 
-		if (Input.GetKeyDown (KeyCode.Q)){
+		if (Input.GetButtonDown ("Submit")){
 
 			timeStart = true;
 		}
@@ -46,7 +46,6 @@ public class startGame : MonoBehaviour {
 
 		if(timer < 0){
 
-			Debug.Log ("Should fly");
 			fadeOut();
 			starting = true;
 		}

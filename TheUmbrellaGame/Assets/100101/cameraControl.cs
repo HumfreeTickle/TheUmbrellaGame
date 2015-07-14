@@ -49,10 +49,14 @@ public class cameraControl : MonoBehaviour
 			RotatePitch ();
 		} 
 		else {
+
 			if (GetComponent<GmaeManage> ().Timer > 2) {
 				transform.position = transform.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
+			}else{
+
+				transform.LookAt (umbrella);
 			}
-			transform.LookAt (umbrella);
+
 		}
 
 	}

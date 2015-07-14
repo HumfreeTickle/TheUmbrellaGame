@@ -54,7 +54,7 @@ public class CreateWind : MonoBehaviour
 
 			//------------- DEBUGGING -----------------------------
 			Debug.DrawRay (transform.position + baseUmbrella, downRayDown, Color.green, Mathf.Infinity, false);
-			print (hit.collider);
+//			print (hit.collider);
 //			print ("Distance: " + hit.distance);
 
 			//------------- CONDITIONS ----------------------------
