@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PauseScreen : MonoBehaviour
 {
 
+//--------------------------------------------------- Needs to be moved into GmaeManager ------------------------------------------
 
 	public float Timer;
 	private float _timer;
@@ -16,6 +17,8 @@ public class PauseScreen : MonoBehaviour
 	private Color fader;
 	public float SlowDown;
 
+//--------------------------------------------------- Sets up all the relevent stuff ------------------------------------------
+	
 	void Start ()
 	{
 		_timer = Timer;
@@ -25,6 +28,8 @@ public class PauseScreen : MonoBehaviour
 		fader.a = 0;
 		Time.timeScale = 0f;
 	}
+
+//--------------------------------------------------- Checks and calls ------------------------------------------
 	
 	void Update ()
 	{
@@ -33,10 +38,8 @@ public class PauseScreen : MonoBehaviour
 		}
 
 		if (!isPaused) {
-			NotPaused();
-		}
-		
-		if (isPaused) {
+			NotPaused ();
+		} else if (isPaused) {
 			Paused ();
 		}
 	}
@@ -68,7 +71,8 @@ public class PauseScreen : MonoBehaviour
 //---------------------------- Pausing Functions -----------------------------------------------------------------------
 
 
-	void Paused(){
+	void Paused ()
+	{
 		Time.timeScale = 0f;
 		FadeIn ();
 		GreyFade.color = fader;
@@ -83,7 +87,8 @@ public class PauseScreen : MonoBehaviour
 		}
 	}
 
-	void NotPaused(){
+	void NotPaused ()
+	{
 		Time.timeScale = 1f;//runs at regular time
 		FadeOut ();
 		GreyFade.color = fader;

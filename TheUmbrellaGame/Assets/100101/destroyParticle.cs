@@ -4,7 +4,8 @@ using System.Collections;
 public class destroyParticle : MonoBehaviour {
 	private float _timer;	
 
-	// Update is called once per frame
+//------------------------------ Destroys particles and the like -----------------------------------
+
 	void Update () {
 		_timer += Time.deltaTime;
 		if (_timer > 3) {

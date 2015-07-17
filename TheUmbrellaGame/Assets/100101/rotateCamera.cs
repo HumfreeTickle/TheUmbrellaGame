@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class rotateCamera : MonoBehaviour {
+
+//----------------------------------- Pretty Sure this all got moved to the controller script ------------------------------------------
+
+
 	public Transform umbrella;
 	public float speed;
 

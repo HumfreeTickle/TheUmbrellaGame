@@ -17,11 +17,13 @@ public class controller : MonoBehaviour
 	public ForceMode rotationForce;
 	public Rigidbody handle;
 	public Transform movement;
+
 	private Rigidbody rb;
 	private float lsphereMass;
 	private float rsphereMass;
 	private float fsphereMass;
 	private float bsphereMass;
+
 //	private float rbMass;
 	private float handleMass;
 	public float forceAppliedToTilt; // used for tilting purposes
@@ -40,17 +42,11 @@ public class controller : MonoBehaviour
 		handleMass = handle.mass;
 	}
 
-	//Hello. htis is a test broadcast to see if this can work.
-	//Pretty sure the upload speed is far too slow but since this is juat for coding might not be an issue
-	//More will need to be done :)
-
-	// Update is called once per frame
 	void FixedUpdate ()
 	{
-
 		Movement ();
-//		HorizontalMass ();
-//		VerticalMass ();
+		HorizontalMass ();
+		VerticalMass ();
 		if (Input.GetButton("DropFromSky")) {
 			TheDescent ();
 		} else {
@@ -60,7 +56,7 @@ public class controller : MonoBehaviour
 		}
 	}
 
-	//----------------------------- OTHER FUNCTIONS ------------------------------------------------------------------------
+//----------------------------- OTHER FUNCTIONS ------------------------------------------------------------------------
 
 	void Movement ()
 	{

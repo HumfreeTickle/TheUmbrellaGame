@@ -5,6 +5,8 @@ using System.Collections;
 
 public class collisionWhat : MonoBehaviour {
 
+//---------------------------------------- For When Shit Hits Other Shit --------------------------------------//
+
 	void OnCollisionEnter(Collision col){
 		print (col.gameObject);
 	}

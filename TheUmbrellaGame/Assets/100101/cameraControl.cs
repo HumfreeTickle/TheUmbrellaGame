@@ -6,21 +6,29 @@ public class cameraControl : MonoBehaviour
 	public Transform umbrella;
 	public float speed;
 	public float rotateSpeed;
+
 	public float xAway;
 	public float yAway;
 	public float zAway;
+	public float distance;
+	public float height;
+
 	public float restrictAngle;
 	public bool annoyingRotation;
 	public Rigidbody playerrb;
+	private Rigidbody rb;
 	public GameObject follow;
+
 	private bool deadDead;
 	private Camera camrea;
 	private float newCameraFOV;
+
 	private Vector3 source;
 	private Vector3 target;
 	private Vector3 outputVelocity;
 	private float speed2;
 	const float DECELERATION_FACTOR = 0.6f;
+
 	Vector3 directionToTarget;
 	Vector3 velocityToTarget;
 	float distanceToTarget;
@@ -71,6 +79,7 @@ public class cameraControl : MonoBehaviour
 	{
 		transform.position = umbrella.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
 		transform.LookAt (umbrella);
+		rb = GetComponent<Rigidbody>();
 
 		camrea = GetComponent<Camera> ();
 
@@ -79,48 +88,46 @@ public class cameraControl : MonoBehaviour
 	void LateUpdate ()
 	{
 		if (!deadDead) {
+
+//-------------------------------------------- Camera Rotation Changes -------------------------------------------------------//
+
 			if (!playerrb || !follow)
 				return; //checks to see if there is a rigidbody to work off
 
-			if (playerrb.velocity.magnitude > 2f) {
-
-				source = transform.position;
-				target = follow.transform.position;
-
-				outputVelocity = Arrive (source, target);
-				print (outputVelocity.magnitude);
-				
-				// Calculate the current rotation angles (only need quaternion for movement)
-				float wantedRotationAngle = follow.transform.localEulerAngles.y;
-
-				float wantedHeight = target.y + yAway;
-
+			if (playerrb.velocity.magnitude > 2f) { //While the player is moving
+//				rb.velocity = Vector3.Lerp (rb.velocity, playerrb.velocity, Time.fixedDeltaTime * speed);
+//
+//
+				//				// Calculate the current rotation angles (only need quaternion for movement)
+				float wantedRotationAngle = umbrella.eulerAngles.y;
+				float wantedHeight = umbrella.position.y + height;
 				float currentRotationAngle = transform.eulerAngles.y;
 				float currentHeight = transform.position.y;
 				
 				
 				// Damp the rotation around the y-axis
-				currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+				currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
 				
 				// Damp the height
-				currentHeight = Mathf.Lerp (currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+				currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
 				
 				// Convert the angle into a euler axis rotation using Quaternions
-				Quaternion currentRotation = Quaternion.Euler (0, currentRotationAngle, 0);
+				Quaternion currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
 				
 				// Set the position of the camera on the x-z plane behind the target
-
-				transform.position = Vector3.Lerp (transform.position, follow.transform.position, Time.deltaTime * speed);
-				transform.position -= currentRotation * Vector3.forward * zAway;
-
-				// Set the height of the camera
-				transform.position = new Vector3 (transform.position.x, currentHeight, transform.position.z);
+				//		rb.velocity = Vector3.Lerp (rb.velocity, playerrb.velocity, Time.fixedDeltaTime * speed);
+				
+				transform.position = Vector3.Lerp (transform.position, umbrella.position, Time.deltaTime* speed);
+				transform.position  -= currentRotation * Vector3.forward * distance;
+				//
+				//		// Set the height of the camera
+				transform.position  = new Vector3(transform.position.x,currentHeight,transform.position.z);
 				
 				// Set the LookAt property to remain fixed on the target
-				transform.LookAt (follow.transform);
+				transform.LookAt(umbrella);
 
-//				newCameraFOV = camrea.fieldOfView + ((playerrb.velocity.magnitude) * speed);
-//				camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, Mathf.Clamp (newCameraFOV, 60, 80), Time.fixedDeltaTime);
+				newCameraFOV = camrea.fieldOfView + ((playerrb.velocity.magnitude) * speed);
+				camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, Mathf.Clamp (newCameraFOV, 60, 80), Time.fixedDeltaTime);
 
 			} else {
 //				print ("else");
@@ -129,6 +136,9 @@ public class cameraControl : MonoBehaviour
 				camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, 60, Time.fixedDeltaTime * speed);
 
 			}
+
+//-------------------------------------------- Other Function Calls -------------------------------------------------------//
+
 //			RotateYaw ();
 //			RotatePitch ();
 
@@ -147,6 +157,8 @@ public class cameraControl : MonoBehaviour
 
 	}
 	
+//-------------------------------------------- Right Analouge Stick Stuff -------------------------------------------------------//
+
 	void RotateYaw ()
 	{
 		if (Mathf.Abs (Input.GetAxis ("Horizontal_R")) > 0) {
@@ -187,6 +199,9 @@ public class cameraControl : MonoBehaviour
 
 		}
 	}
+
+
+//-------------------------------------------- Stops Blocked View -------------------------------------------------------//
 
 	void OnTriggerStay (Collider col)
 	{

@@ -4,13 +4,9 @@ using System.Collections;
 public class Push : MonoBehaviour {
 
 	public float Speed;
-
-	// Use this for initialization
-	void Start () {
 	
-	}
+//--------------------------------------------------- Hasn't been touched in awhile ------------------------------------------
 	
-	// Update is called once per frame
 	void Update () {
 		if(Input.GetButtonDown ("Horizontal")){
 			//	Engine.PlayOneShot(Tank, 1);

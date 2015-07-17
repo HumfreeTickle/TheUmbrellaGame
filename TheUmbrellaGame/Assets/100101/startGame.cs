@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class startGame : MonoBehaviour {
 
+//------------------------------------------ Needs to be moved into the GmaeManager script ------------------------------------------
+
+
 	private bool nextLevel; // has the transtion to Level-1 been activated
 	public float changeTime = 1.0f;
 	public float timer;
@@ -17,6 +20,7 @@ public class startGame : MonoBehaviour {
 	private Rigidbody umbrella;
 	public float softly;
 
+//--------------------------------------------------- Sets up all the relevent stuff ------------------------------------------
 
 	void Start(){
 
@@ -29,33 +33,32 @@ public class startGame : MonoBehaviour {
 
 	}
 
+//----------------------------------------------- Checks and calls ------------------------------------------
 
 	void Update(){
 
 		if (Input.GetButtonDown ("Submit")){
-
 			timeStart = true;
 		}
-
 		if(timeStart == true){
-
 			timer--;
 			fadeIn();
 			umbrellaGame.color = fading;
 		}
-
 		if(timer < 0){
-
 			fadeOut();
 			starting = true;
 		}
 		if(starting == true){
-
-			umbrella.AddForce(2,5,0 * softly);
-
+			FlyUmbrellaFly();
 		}
+	}
+
+//----------------------------------------------- Other Funcitons ------------------------------------------
 
 
+	void FlyUmbrellaFly(){
+		umbrella.AddForce(2,5,0 * softly);
 	}
 
 	void fadeIn(){

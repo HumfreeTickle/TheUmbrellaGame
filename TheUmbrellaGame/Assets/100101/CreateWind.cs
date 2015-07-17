@@ -29,7 +29,7 @@ public class CreateWind : MonoBehaviour
 			charge = Mathf.Lerp (charge, 0, Time.fixedDeltaTime * 10);
 		}
 
-		//---------------- TURN OFF UPWARDFORCE ---------------------
+//---------------- TURN OFF UPWARDFORCE ---------------------
 		if (charge <= 1) {
 			GetComponent<upwardForce> ().enabled = false;
 

@@ -10,25 +10,14 @@ public class grabbing : MonoBehaviour
 
 	void Update ()
 	{
-
 		if(transform.childCount > 0){
 
 			if (Input.GetButtonDown ("Fire3")) {
-
-
-
-
-			if (Input.GetButtonDown ("Fire3")) {
-
-
-			if (Input.GetButtonDown ("Fire3")) {
-
 				JumpKey = !JumpKey;
 			}
+
 			Detachment ();
 		}
-	}
-}
 	}
 		
 	void Detachment ()

@@ -5,6 +5,10 @@ using System.Collections;
 
 public class Rotation : MonoBehaviour
 {
+
+//----------------------------------- Nope nope nope nope noooooooooope ------------------------------------------
+
+
 	public float rotationSpeed;
 	public float speed;
 	private float posX;

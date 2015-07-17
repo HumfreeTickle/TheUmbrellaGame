@@ -13,7 +13,11 @@ public class KittenAI : MonoBehaviour {
 
 	NavMeshAgent agent;
 	Animator anim;  
-	
+
+//------------------------------------------ Script Zoey sent me -------------------------------------------------------
+//------------------------------------------ Should go through it at some point -------------------------------------------------------
+//------------------------------------------ I'll give it a new folder so I can regret not looking at it later -------------------------------------------------------
+
 
 	void Start () {
 		agent = GetComponent <NavMeshAgent>();
