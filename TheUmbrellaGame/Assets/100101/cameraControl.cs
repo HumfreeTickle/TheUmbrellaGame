@@ -10,6 +10,8 @@ public class cameraControl : MonoBehaviour
 	public float xAway;
 	public float yAway;
 	public float zAway;
+	public float distance;
+	public float height;
 
 	public float restrictAngle;
 	public bool annoyingRotation;
@@ -93,52 +95,36 @@ public class cameraControl : MonoBehaviour
 				return; //checks to see if there is a rigidbody to work off
 
 			if (playerrb.velocity.magnitude > 2f) { //While the player is moving
-				rb.velocity = Vector3.Lerp (rb.velocity, playerrb.velocity, Time.fixedDeltaTime * speed);
+//				rb.velocity = Vector3.Lerp (rb.velocity, playerrb.velocity, Time.fixedDeltaTime * speed);
 //
-//				source = transform.position;
-//				target = follow.transform.position;
 //
-//				outputVelocity = Arrive (source, target);
-//
-//				// Calculate the current rotation angles (only need quaternion for movement)
-//				float wantedRotationAngle = follow.transform.eulerAngles.y;
-//
-//				float wantedHeight = target.y + yAway;
-//
-//				float currentRotationAngle = transform.eulerAngles.y;
-//				float currentHeight = transform.position.y;
-//				
-//				
-//				// Damp the rotation around the y-axis
-//				currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
-//				
-//				// Damp the height
-//				currentHeight = Mathf.Lerp (currentHeight, wantedHeight, heightDamping * Time.deltaTime);
-//				
-//				// Convert the angle into a euler axis rotation using Quaternions
-//				Quaternion currentRotation = Quaternion.Euler (0, 0, currentRotationAngle);
-//				
-//				// Set the position of the camera on the x-z plane behind the target
-//
-//				transform.position = Vector3.Lerp (transform.position, follow.transform.position, Time.deltaTime);
-//				transform.position -= currentRotation * Vector3.forward;
-//
-//				// Set the height of the camera
-//				transform.position = new Vector3 (transform.position.x, currentHeight, transform.position.z);
-//				
-//				// Set the LookAt property to remain fixed on the target
-
-//				Vector3 targetPostition = new Vector3( target.position.x, 
-//				                                      this.transform.position.y, 
-//				                                      target.position.z ) ;
-//				this.transform.LookAt( targetPostition ) ;
-
-//				calculate the rotational values for the transform based on the target's X and Z positions (horizontal plane),
-//				but the target's Y position will always be the same as mine
-
-
-
-//				transform.LookAt (follow.transform);
+				//				// Calculate the current rotation angles (only need quaternion for movement)
+				float wantedRotationAngle = umbrella.eulerAngles.y;
+				float wantedHeight = umbrella.position.y + height;
+				float currentRotationAngle = transform.eulerAngles.y;
+				float currentHeight = transform.position.y;
+				
+				
+				// Damp the rotation around the y-axis
+				currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+				
+				// Damp the height
+				currentHeight = Mathf.Lerp(currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+				
+				// Convert the angle into a euler axis rotation using Quaternions
+				Quaternion currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
+				
+				// Set the position of the camera on the x-z plane behind the target
+				//		rb.velocity = Vector3.Lerp (rb.velocity, playerrb.velocity, Time.fixedDeltaTime * speed);
+				
+				transform.position = Vector3.Lerp (transform.position, umbrella.position, Time.deltaTime* speed);
+				transform.position  -= currentRotation * Vector3.forward * distance;
+				//
+				//		// Set the height of the camera
+				transform.position  = new Vector3(transform.position.x,currentHeight,transform.position.z);
+				
+				// Set the LookAt property to remain fixed on the target
+				transform.LookAt(umbrella);
 
 				newCameraFOV = camrea.fieldOfView + ((playerrb.velocity.magnitude) * speed);
 				camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, Mathf.Clamp (newCameraFOV, 60, 80), Time.fixedDeltaTime);
