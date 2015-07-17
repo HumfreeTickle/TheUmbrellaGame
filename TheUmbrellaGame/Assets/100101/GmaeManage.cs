@@ -10,11 +10,14 @@ public class GmaeManage : MonoBehaviour
 	private GameObject cameraController;
 	private float _gameOverTimer;
 
-	public float Timer{
+	public float Timer{ //timer used elsewhere to end the game
 		get{
 			return _gameOverTimer;
 		}
 	}
+
+//-------------------------------------- All the calls -----------------------------------------------------------------
+
 
 	void Update ()
 	{
@@ -23,20 +26,26 @@ public class GmaeManage : MonoBehaviour
 //		PauseGame ();
 		EndGame ();
 	}
-	
+
+//-------------------------------------- Start Game is elsewhere for some reason -----------------------------------------------------------------
+
+
 	void StartGame ()
 	{
 		//Fades in from white
 	}
+
+//-------------------------------------- Ending the game is here (sort of) -----------------------------------------------------------------
 	
 	void EndGame ()
 	{
 		if(gameOver){
 			_gameOverTimer += Time.deltaTime;
 		}
-
 	}
 
+//-------------------------------------- Not used -----------------------------------------------------------------
+	
 	void PauseGame ()
 	{
 		if (Input.GetButtonDown ("Submit")) {
@@ -52,6 +61,8 @@ public class GmaeManage : MonoBehaviour
 			Time.timeScale = 1;
 		}
 	}
+
+//-------------------------------------- Resets the game -----------------------------------------------------------------
 	
 	void RestartGame ()
 	{

@@ -15,11 +15,7 @@ public class flingObject : MonoBehaviour {
 	public float LetGo;
 	public bool JointGood;
 
-	// Use this for initialization
-
-	void Start(){
-
-	}
+//-------------------------------------- Sets up the connections -----------------------------------------------------------------
 
 	void OnTriggerEnter (Collider other)
 	{
@@ -39,11 +35,13 @@ public class flingObject : MonoBehaviour {
 
 
 	}
+
+//-------------------------------------- Breaks the bond -----------------------------------------------------------------
+
 	void FixedUpdate(){
 
 		if(Input.GetKeyUp(KeyCode.DownArrow))//when the down arrow is released. 
 		{
-				
 			theJoint.breakTorque = 0.001f ;//this lowers the breaktorque of the handle making the object break away.
 			//theJoint.enableCollision = false;
 			player.GetComponent<Rigidbody>().mass = 1;//increases the mass of the object 
@@ -51,6 +49,9 @@ public class flingObject : MonoBehaviour {
 			Debug.Log("Less Force");
 		}
 	}
+
+//-------------------------------------- During Flight -----------------------------------------------------------------
+
 	void Update(){
 		
 		if(theJoint == !isActiveAndEnabled){//when the joint breaks
@@ -66,7 +67,8 @@ public class flingObject : MonoBehaviour {
 		}
 	}
 //
-//
+//-------------------------------------- Possibly useful things but who knows -----------------------------------------------------------------
+
 //			
 //			theJoint.enableCollision = false;
 //			theJoint.enablePreprocessing = false;

@@ -2,7 +2,10 @@
 using System.Collections;
 
 public class riseOrFall : MonoBehaviour {
-	
+
+//-------------------------------------- I think this went the way of the dinosaur ------------------------------------------
+
+
 	private Rigidbody umbrellaBody;
 	private bool umbrellaBobbing;
 	public float velocityOfFall;

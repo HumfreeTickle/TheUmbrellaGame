@@ -3,6 +3,9 @@ using System.Collections;
 
 public class rainShowers : MonoBehaviour
 {
+
+//--------------------------------------------------- Probably should be moved to CloudBehave ------------------------------------------
+	
 	private Material cloudColor;
 	private Vector3 cloudSize = new Vector3 (10.5f, 7.5f, 7.5f);
 	private Vector3 originalCloudSize;
@@ -36,6 +39,8 @@ public class rainShowers : MonoBehaviour
 		}
 	}
 
+//--------------------------------------------------- Darkens the clouds ------------------------------------------
+	
 	void ChangeColour ()
 	{
 		Color darker = new Vector4 (0.2f, 0.2f, 0.2f, 1);
@@ -57,6 +62,8 @@ public class rainShowers : MonoBehaviour
 		}
 	}
 
+//--------------------------------------------------- Turns on the Rain System ------------------------------------------
+
 	void MakeItRain ()
 	{
 		if (cloudColor.color.r >= soNowItRains.r) {
@@ -70,6 +77,8 @@ public class rainShowers : MonoBehaviour
 		}
 	}
 
+//--------------------------------------------------- Resets Colour and Turns off rain system ------------------------------------------
+	
 	void StopTheRain ()
 	{
 		transform.localScale = Vector3.Lerp (transform.localScale, originalCloudSize, Time.deltaTime / 10);

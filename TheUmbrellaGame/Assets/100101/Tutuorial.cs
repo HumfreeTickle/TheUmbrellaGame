@@ -3,8 +3,9 @@ using System.Collections;
 
 public class Tutuorial : MonoBehaviour {
 
-	//Changes a parameter to cycle between all the tutorial sections 
-	
+//------------------------------------------ Needs to be completely overhalled ------------------------------------------
+//------------------------------------------- "Don't leave half of the tutorial out" - Owen Harris, 2015 ------------------------------------------
+
 	private Animator animator;
 	public int x = 0; 
 	public bool upClicked = false;

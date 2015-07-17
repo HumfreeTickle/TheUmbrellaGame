@@ -9,7 +9,9 @@ public class removeVelocity : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
 	}
-	
+
+//----------------------------------------- Allows the Umbrella to come to a gentle stop ------------------------------------------
+
 	void FixedUpdate () {
 		if (!Input.anyKeyDown) {
 			rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, Time.fixedDeltaTime*slowDownSpeed);

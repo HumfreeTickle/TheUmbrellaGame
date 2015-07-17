@@ -6,21 +6,27 @@ public class cameraControl : MonoBehaviour
 	public Transform umbrella;
 	public float speed;
 	public float rotateSpeed;
+
 	public float xAway;
 	public float yAway;
 	public float zAway;
+
 	public float restrictAngle;
 	public bool annoyingRotation;
 	public Rigidbody playerrb;
+	private Rigidbody rb;
 	public GameObject follow;
+
 	private bool deadDead;
 	private Camera camrea;
 	private float newCameraFOV;
+
 	private Vector3 source;
 	private Vector3 target;
 	private Vector3 outputVelocity;
 	private float speed2;
 	const float DECELERATION_FACTOR = 0.6f;
+
 	Vector3 directionToTarget;
 	Vector3 velocityToTarget;
 	float distanceToTarget;
@@ -71,6 +77,7 @@ public class cameraControl : MonoBehaviour
 	{
 		transform.position = umbrella.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
 		transform.LookAt (umbrella);
+		rb = GetComponent<Rigidbody>();
 
 		camrea = GetComponent<Camera> ();
 
@@ -79,48 +86,62 @@ public class cameraControl : MonoBehaviour
 	void LateUpdate ()
 	{
 		if (!deadDead) {
+
+//-------------------------------------------- Camera Rotation Changes -------------------------------------------------------//
+
 			if (!playerrb || !follow)
 				return; //checks to see if there is a rigidbody to work off
 
-			if (playerrb.velocity.magnitude > 2f) {
+			if (playerrb.velocity.magnitude > 2f) { //While the player is moving
+				rb.velocity = Vector3.Lerp (rb.velocity, playerrb.velocity, Time.fixedDeltaTime * speed);
+//
+//				source = transform.position;
+//				target = follow.transform.position;
+//
+//				outputVelocity = Arrive (source, target);
+//
+//				// Calculate the current rotation angles (only need quaternion for movement)
+//				float wantedRotationAngle = follow.transform.eulerAngles.y;
+//
+//				float wantedHeight = target.y + yAway;
+//
+//				float currentRotationAngle = transform.eulerAngles.y;
+//				float currentHeight = transform.position.y;
+//				
+//				
+//				// Damp the rotation around the y-axis
+//				currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
+//				
+//				// Damp the height
+//				currentHeight = Mathf.Lerp (currentHeight, wantedHeight, heightDamping * Time.deltaTime);
+//				
+//				// Convert the angle into a euler axis rotation using Quaternions
+//				Quaternion currentRotation = Quaternion.Euler (0, 0, currentRotationAngle);
+//				
+//				// Set the position of the camera on the x-z plane behind the target
+//
+//				transform.position = Vector3.Lerp (transform.position, follow.transform.position, Time.deltaTime);
+//				transform.position -= currentRotation * Vector3.forward;
+//
+//				// Set the height of the camera
+//				transform.position = new Vector3 (transform.position.x, currentHeight, transform.position.z);
+//				
+//				// Set the LookAt property to remain fixed on the target
 
-				source = transform.position;
-				target = follow.transform.position;
+//				Vector3 targetPostition = new Vector3( target.position.x, 
+//				                                      this.transform.position.y, 
+//				                                      target.position.z ) ;
+//				this.transform.LookAt( targetPostition ) ;
 
-				outputVelocity = Arrive (source, target);
-				print (outputVelocity.magnitude);
-				
-				// Calculate the current rotation angles (only need quaternion for movement)
-				float wantedRotationAngle = follow.transform.localEulerAngles.y;
+//				calculate the rotational values for the transform based on the target's X and Z positions (horizontal plane),
+//				but the target's Y position will always be the same as mine
 
-				float wantedHeight = target.y + yAway;
 
-				float currentRotationAngle = transform.eulerAngles.y;
-				float currentHeight = transform.position.y;
-				
-				
-				// Damp the rotation around the y-axis
-				currentRotationAngle = Mathf.LerpAngle (currentRotationAngle, wantedRotationAngle, rotationDamping * Time.deltaTime);
-				
-				// Damp the height
-				currentHeight = Mathf.Lerp (currentHeight, wantedHeight, heightDamping * Time.deltaTime);
-				
-				// Convert the angle into a euler axis rotation using Quaternions
-				Quaternion currentRotation = Quaternion.Euler (0, currentRotationAngle, 0);
-				
-				// Set the position of the camera on the x-z plane behind the target
 
-				transform.position = Vector3.Lerp (transform.position, follow.transform.position, Time.deltaTime * speed);
-				transform.position -= currentRotation * Vector3.forward * zAway;
+//				transform.LookAt (follow.transform);
 
-				// Set the height of the camera
-				transform.position = new Vector3 (transform.position.x, currentHeight, transform.position.z);
-				
-				// Set the LookAt property to remain fixed on the target
-				transform.LookAt (follow.transform);
-
-//				newCameraFOV = camrea.fieldOfView + ((playerrb.velocity.magnitude) * speed);
-//				camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, Mathf.Clamp (newCameraFOV, 60, 80), Time.fixedDeltaTime);
+				newCameraFOV = camrea.fieldOfView + ((playerrb.velocity.magnitude) * speed);
+				camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, Mathf.Clamp (newCameraFOV, 60, 80), Time.fixedDeltaTime);
 
 			} else {
 //				print ("else");
@@ -129,6 +150,9 @@ public class cameraControl : MonoBehaviour
 				camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, 60, Time.fixedDeltaTime * speed);
 
 			}
+
+//-------------------------------------------- Other Function Calls -------------------------------------------------------//
+
 //			RotateYaw ();
 //			RotatePitch ();
 
@@ -147,6 +171,8 @@ public class cameraControl : MonoBehaviour
 
 	}
 	
+//-------------------------------------------- Right Analouge Stick Stuff -------------------------------------------------------//
+
 	void RotateYaw ()
 	{
 		if (Mathf.Abs (Input.GetAxis ("Horizontal_R")) > 0) {
@@ -187,6 +213,9 @@ public class cameraControl : MonoBehaviour
 
 		}
 	}
+
+
+//-------------------------------------------- Stops Blocked View -------------------------------------------------------//
 
 	void OnTriggerStay (Collider col)
 	{

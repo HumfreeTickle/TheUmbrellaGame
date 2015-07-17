@@ -10,26 +10,33 @@ public class NPC_Movements : MonoBehaviour
 	public Transform destination;
 	public GameObject lasthit;
 
-	// Use this for initialization
+//--------------------------------------------------- Sets up all the relevent stuff ------------------------------------------
+
 	void Start ()
 	{
-		npcNavMeshAgent = GetComponent<NavMeshAgent> ();
-		destination = waypoint1;
+		npcNavMeshAgent = GetComponent<NavMeshAgent> (); //gets the navmesh agent
+		destination = waypoint1; //sets a starting destination
 	}
+
+//--------------------------------------------------- All the function calls ------------------------------------------
 	
-	// Update is called once per frame
 	void Update ()
 	{
-//		Invoke ("Destination", 5f);
-		Movement (destination);
+		Movement (destination); //
 	}
+
+//--------------------------------------------------- Moves the NPC towards the destination point ------------------------------------------
+
 
 	void Movement (Transform waypoint)
 	{
-		npcNavMeshAgent.SetDestination (waypoint.position);
-		transform.LookAt (waypoint.position);
-		npcNavMeshAgent.stoppingDistance = 5f;
+		npcNavMeshAgent.SetDestination (waypoint.position); // sets the point the nav agent is to move to
+		transform.LookAt (waypoint.position); // makes the NPC look at the destination
+		npcNavMeshAgent.stoppingDistance = 5f; //stopping distance, doesn't really work
 	}
+
+//--------------------------------------------------- Controls where to go ---------------------------------------------
+//--------------------------------------------------- Not being called for some reason ------------------------------------------
 
 	void Destination ()
 	{
@@ -40,6 +47,8 @@ public class NPC_Movements : MonoBehaviour
 		}
 	}
 
+//--------------------------------------------------- Was supposed to stop the NPC from constantly walking into walls ------------------------------------------
+	
 	void OnCollisionEnter (Collision col)
 	{
 //		print (this.gameObject + " hit " + col.gameObject);

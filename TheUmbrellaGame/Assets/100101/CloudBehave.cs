@@ -5,7 +5,12 @@ public class CloudBehave : MonoBehaviour
 {
 
 	// This should move the cloud from right to left,slowly. When a cloud gets to a certain point it instatiates a new cloud then deletes itself.
-	// Would be better if this was a class that generated all the clouds at random positions.
+
+//
+//	
+// Would be better if this was a class that generated all the clouds at random positions.//
+//
+//
 
 
 	private Rigidbody cloud;
@@ -15,19 +20,21 @@ public class CloudBehave : MonoBehaviour
 	[System.NonSerialized]
 	public Quaternion cloudRotation = new Quaternion (0.7f, 0, 0, -0.7f);
 
-	// Use this for initialization
 	void Start ()
 	{	
 		cloud = GetComponent<Rigidbody>();
 	}
-	
-	// Update is called once per frame
+
+//----------------------------------- Calls and movement stuff -------------------------------------------------------------//
+
 	void FixedUpdate ()
 	{
 		cloud.AddForce(Vector3.right*-1* Time.fixedDeltaTime*speedOfCloud);
 		createSomeClouds ();
 		ignoreOthers ();
 	}
+
+//------------------------------------ Function to spawn in Clouds --------------------------------------------------------//
 
 	void createSomeClouds ()
 	{
@@ -36,6 +43,8 @@ public class CloudBehave : MonoBehaviour
 			Destroy (gameObject);
 		}
 	}
+
+//----------------------------------- An Attempt to get the clouds to ignore each other -----------------------------------//
 
 	void ignoreOthers ()
 	{
