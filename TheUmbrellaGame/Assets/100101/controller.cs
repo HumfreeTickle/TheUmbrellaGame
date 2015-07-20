@@ -17,7 +17,6 @@ public class controller : MonoBehaviour
 	public ForceMode rotationForce;
 	public Rigidbody handle;
 	public Transform movement;
-
 	private Rigidbody rb;
 	private float lsphereMass;
 	private float rsphereMass;
@@ -47,7 +46,7 @@ public class controller : MonoBehaviour
 		Movement ();
 		HorizontalMass ();
 		VerticalMass ();
-		if (Input.GetButton("DropFromSky")) {
+		if (Input.GetButton ("DropFromSky")) {
 			TheDescent ();
 		} else {
 			if (GetComponent<CreateWind> ().charge > 1) {
@@ -68,7 +67,7 @@ public class controller : MonoBehaviour
 		// after we work out how wind is going to work then it can change
 
 		if (Input.GetAxis ("Vertical_L") > 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
-			rb.AddForce (transform.TransformDirection (movement.forward) * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
+			rb.AddForce (movement.forward * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
 		} 
 //		else if (Input.GetAxis ("Vertical_L") > 0.5f){
 //			rb.AddForce (transform.position * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing

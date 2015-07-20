@@ -14,8 +14,10 @@ public class CameraControl : MonoBehaviour {
 
 	// The target we are following
 	public Transform target;
+
 	// The distance in the x-z plane to the target
 	public float distance = 10.0f;
+	public float side = 2f;
 	// the height we want the camera to be above the target
 	public float height = 5.0f;
 	// How much we want to damp the movement
@@ -32,6 +34,9 @@ public class CameraControl : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
+
+
+
 		if (!player) return;
 
 //		rb.velocity = Vector3.Lerp (rb.velocity, playerrb.velocity, Time.fixedDeltaTime * speed);
@@ -39,9 +44,15 @@ public class CameraControl : MonoBehaviour {
 
 		// Calculate the current rotation angles (only need quaternion for movement)
 		float wantedRotationAngle = playerTr.eulerAngles.y;
-		float wantedHeight = playerrb.velocity.y + height;
+
+		float wantedHeight = player.transform.position.y + height;
+//		float wantedHeight = playerrb.velocity.y + height;
+
 		float currentRotationAngle = transform.eulerAngles.y;
-		float currentHeight = rb.velocity.y;
+
+		float currentHeight = transform.position.y;
+//		float currentHeight = rb.velocity.y;
+
 		
 		
 		// Damp the rotation around the y-axis
@@ -57,8 +68,8 @@ public class CameraControl : MonoBehaviour {
 //		rb.velocity = Vector3.Lerp (rb.velocity, playerrb.velocity, Time.fixedDeltaTime * speed);
 
 		if( playerrb.velocity.magnitude > 10){
-			newCameraFOV =  camrea.fieldOfView + (playerrb.velocity.magnitude*Time.fixedDeltaTime);
-			camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, Mathf.Clamp(newCameraFOV, 60, 120), Time.fixedDeltaTime);
+			newCameraFOV =  camrea.fieldOfView + (playerrb.velocity.magnitude * Time.fixedDeltaTime);
+			camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView, Mathf.Clamp(newCameraFOV, 60, 80), Time.fixedDeltaTime * speed);
 		}else{
 			camrea.fieldOfView = Mathf.Lerp (camrea.fieldOfView , 60, Time.fixedDeltaTime);
 		}
@@ -67,7 +78,7 @@ public class CameraControl : MonoBehaviour {
 		transform.position  -= currentRotation * Vector3.forward * distance;
 //
 //		// Set the height of the camera
-		transform.position  = new Vector3(transform.position.x,currentHeight,transform.position.z);
+		transform.position  = new Vector3(transform.position.x ,currentHeight, transform.position.z);
 
 		// Set the LookAt property to remain fixed on the target
 		transform.LookAt(playerTr);
