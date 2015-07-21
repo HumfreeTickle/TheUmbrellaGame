@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RotationBlades : MonoBehaviour {
-
+public class RotationBlades : MonoBehaviour
+{
 	bool rotation = false;//this is the blades turning
 	public GameObject landHere;//the halo pointing where to interact with the windmill
 	public GameObject brolly;//the umbrella
@@ -10,46 +10,25 @@ public class RotationBlades : MonoBehaviour {
 	public Vector3 direction;//the direction the umbrella will be pushed in
 	public bool turning;
 	public float timer;
-
-	void Awake(){
-
-	}
-
-	void Update(){
-
-		//onRotation();
-//		if (timer == 0)
-		if(turning)
-		{
-			transform.Rotate(0,20*Time.deltaTime,0);
-		}
-		}
-
-
-
 	
+	void Update ()
+	{
+		onRotation ();
+	}
 
-	void onRotation () {
-		if(rotation)
-		{
-		transform.Rotate(0,5*Time.deltaTime,0);//the direction and speed at which the windmill will move
+	void onRotation ()
+	{
+		if (rotation) {
+			transform.Rotate (0, 5 * Time.deltaTime, 0);//the direction and speed at which the windmill will move
 		}
 	}
 
-	void OnTriggerEnter (Collider other){
-			
-			if(other.gameObject.tag == "Player"){//if the umbrella interacts with the windmill
+	void OnTriggerEnter (Collider other)
+	{
+		if (other.gameObject.tag == "Player") {//if the umbrella interacts with the windmill
 			rotation = true;//turn on the windmill
-			Destroy(landHere);//get rid of the halo
-			other.GetComponent<Rigidbody>().AddForce(direction * blowforce);//blow back the umbrella
-			turning = true;
-			Debug.Log("WindmillBlows");
-
-			}
+			Destroy (landHere);//get rid of the halo
+			other.GetComponent<Rigidbody> ().AddForce (direction * blowforce);//blow back the umbrella
+		}
 	}
-
-//	void OnTriggerExit (Collider other){
-//
-//			timer --;
-//}
 }

@@ -4,26 +4,24 @@ using UnityEngine.UI;
 
 public class EnterGame : MonoBehaviour
 {
+	//needs to call the GmaeManager script
+
 
 	public Image whiteIN;
 	private Color whitey;
 	public float speed;
 	public bool Starting;
 
-	// Use this for initialization
 	void Start ()
 	{
-	
 		whitey = whiteIN.color;
 	}
 
 	void Update ()
 	{
-
 		if (Starting) {
 			fadeWhite ();
 		}
-
 	}
 	
 	// Update is called once per frame

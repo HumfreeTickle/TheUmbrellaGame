@@ -48,9 +48,9 @@ public class CreateWind : MonoBehaviour
 
 		Vector3 downRayDown = Vector3.down;
 		RaycastHit hit;
+
 		
-		
-		if (Physics.Raycast (transform.position, downRayDown, out hit, Mathf.Infinity)) {
+		if (Physics.Raycast (transform.position + baseUmbrella, downRayDown, out hit, Mathf.Infinity)) {
 
 			//------------- DEBUGGING -----------------------------
 			Debug.DrawRay (transform.position + baseUmbrella, downRayDown, Color.green, Mathf.Infinity, false);
@@ -63,9 +63,9 @@ public class CreateWind : MonoBehaviour
 			}
 
 		} else {
-			charge = Mathf.Lerp (charge, 0, Time.deltaTime);
+			charge = Mathf.Lerp (charge, 0, Time.deltaTime/100);
 			if(charge <= 1){
-				cameraControl.GetComponent<cameraControl>().DeadDead = true;
+				cameraControl.GetComponent<CameraControl>().DeadDead = true;
 			}
 //			GetComponent<Rigidbody> ().drag = Mathf.Lerp (GetComponent<Rigidbody> ().drag, 20, Time.fixedDeltaTime / 10);
 		}

@@ -9,14 +9,13 @@ public class rotateWith : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		player = GameObject.FindWithTag ("Player").transform;
+		player = GameObject.Find ("Umbrella").transform;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		RotateWith (player);
-
 	}
 
 	void RotateWith (Transform turning)

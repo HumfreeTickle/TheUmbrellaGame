@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.ImageEffects;
 
 public class GmaeManage : MonoBehaviour
 {
@@ -67,7 +68,7 @@ public class GmaeManage : MonoBehaviour
 
 	void Update ()
 	{
-		gameOver = GetComponent<cameraControl> ().DeadDead;
+		gameOver = GetComponent<CameraControl> ().DeadDead;
 		RestartGame ();
 //		PauseGame ();
 		EndGame ();
@@ -166,23 +167,30 @@ public class GmaeManage : MonoBehaviour
 
 	void Paused ()
 	{
-		Time.timeScale = 0f;
+		Time.timeScale = 0;
+		
+		GetComponent<Grayscale> ().enabled = true;
+		GetComponent<BlurOptimized> ().enabled = true;
+		
 		FadeIn ();
 		GreyFade.color = fader;
-			
-			
+		
+		
 		if (Input.GetKeyDown (KeyCode.L)) {
-				
+			
 			Application.LoadLevel ("Start_Screen");
 		}
 		if (Input.GetKeyDown (KeyCode.R)) {
 			Application.LoadLevel ("Boucing");
 		}
 	}
-		
+	
 	void NotPaused ()
 	{
 		Time.timeScale = 1f;//runs at regular time
+		GetComponent<Grayscale> ().enabled = false;
+		GetComponent<BlurOptimized> ().enabled = false;
+		
 		FadeOut ();
 		GreyFade.color = fader;
 	}

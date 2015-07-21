@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityStandardAssets.ImageEffects;
 
 public class PauseScreen : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PauseScreen : MonoBehaviour
 	private Image Screen;
 	private Color fader;
 	public float SlowDown;
+	public GameObject cameraGrey;
+	private BlurOptimized cameraBlurring;
 
 //--------------------------------------------------- Sets up all the relevent stuff ------------------------------------------
 	
@@ -27,6 +30,7 @@ public class PauseScreen : MonoBehaviour
 		fader = GetComponent<Image> ().color;
 		fader.a = 0;
 		Time.timeScale = 0f;
+		cameraBlurring = cameraGrey.GetComponent<BlurOptimized> ();
 	}
 
 //--------------------------------------------------- Checks and calls ------------------------------------------
@@ -39,7 +43,7 @@ public class PauseScreen : MonoBehaviour
 
 		if (!isPaused) {
 			NotPaused ();
-		} else if (isPaused) {
+		} else {
 			Paused ();
 		}
 	}
@@ -73,7 +77,11 @@ public class PauseScreen : MonoBehaviour
 
 	void Paused ()
 	{
-		Time.timeScale = 0f;
+		Time.timeScale = 0;
+
+		cameraGrey.GetComponent<Grayscale> ().enabled = true;
+		cameraBlurring.enabled = true;
+
 		FadeIn ();
 		GreyFade.color = fader;
 		
@@ -90,6 +98,9 @@ public class PauseScreen : MonoBehaviour
 	void NotPaused ()
 	{
 		Time.timeScale = 1f;//runs at regular time
+		cameraGrey.GetComponent<Grayscale> ().enabled = false;
+		cameraGrey.GetComponent<BlurOptimized> ().enabled = false;
+
 		FadeOut ();
 		GreyFade.color = fader;
 	}

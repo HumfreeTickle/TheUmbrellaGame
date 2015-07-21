@@ -59,15 +59,17 @@ public class controller : MonoBehaviour
 
 	void Movement ()
 	{
+		// Tilting now only going to affect the umbrella facade
+		// Particles need to be added to the turning to show that movement is happening
+		// Also there should be a better slow down for the turning so the player doesn't end up spinning for ages
+
 
 		//*** _____ The direction the umbrella is moving in is an arc, regardless of the force applied ______ ***
-		//*** _____ So I need to figure out a way to keep the movement vector going in the same direction ___ ***
+		//*** _____ So I need to figure out a way to keep the movement vector going in the same direction along a y rotation ___ ***
 
-		// needs to keep using the absolute value so the player can rock back and forth to gain height
-		// after we work out how wind is going to work then it can change
 
 		if (Input.GetAxis ("Vertical_L") > 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
-			rb.AddForce (movement.forward * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
+			rb.AddForce (transform.TransformDirection (movement.forward) * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
 		} 
 //		else if (Input.GetAxis ("Vertical_L") > 0.5f){
 //			rb.AddForce (transform.position * Input.GetAxis ("Vertical_L") * speed, movementForce); //Add force in the direction it is facing
@@ -128,7 +130,6 @@ public class controller : MonoBehaviour
 
 	void TheDescent ()
 	{
-
 		GetComponent<upwardForce> ().enabled = !GetComponent<upwardForce> ().enabled;
 	}
 }
