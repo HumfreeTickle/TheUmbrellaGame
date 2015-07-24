@@ -3,53 +3,73 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
 
+public enum GameState // sets what game state is currently being viewed
+{
+	NullState,
+	Intro,
+	Game
+}
+
 public class GmaeManage : MonoBehaviour
 {
+
+	// Doesn't allow another instance of GmaeManage to be used within the scene --- http://rusticode.com/2013/12/11/creating-game-manager-using-state-machine-and-singleton-pattern-in-unity3d/
+	protected GmaeManage ()
+	{
+		//not sure why this is empty
+	}
+
+	private static GmaeManage _instance = null;
 	
-	private bool pauseGame;
-	private bool gameOver;
-	private GameObject cameraController;
-	private float _gameOverTimer;
-	private float _charge;
+	// Singleton pattern implementation
+	public static GmaeManage Instance { 
+		get {
+			if (GmaeManage._instance == null) {
+				GmaeManage._instance = new GmaeManage (); 
+			}  
+			return GmaeManage._instance;
+		} 
+	}
 
-	//Pause script stuff
-	public float autoPauseTimer;
-	private float _timer;
-	private GameObject Greyness;
-	public bool isPaused;
-	private Image GreyFade;
-	public float speed;
-	private Image Screen;
-	private Color fader;
-	public float SlowDown;
+	public GameState gameState { get; private set; }
 
+
+//------------------------------------------- Inherited Classes ------------------------------------//
+
+	public FadeScript fading = new FadeScript();
+
+//--------------------------------------------------------------------------------------------------//
+
+
+	private GameObject cameraController; // 
+	private bool gameOver; // is the game over
+	private bool isPaused; // is the game paused or not 
+
+	public float autoPauseTimer; // idle timer till game auto pauses
+	public float transitionSpeed; // speed of transitions
+	
+	private float _gameOverTimer; // 
+	private float _charge; // the umbrella's energy charge
+
+	public Image PauseScreen; // pause screen image
+	
 	//Start script Stuff
 	private bool nextLevel; // has the transtion to Level-1 been activated
-	public float changeTime = 1.0f;
-	public float timer;
-	public bool starting;
 	private Image umbrellaGame;
-
-	//---------------------
-	private Color fading; // needs to be made into a parameter
-	//---------------------
-
-	public float Speed;
-	public bool timeStart;
 	public GameObject brolly;
-	public float thrust;
 	private Rigidbody umbrella;
 	public float softly;
-	
 
 //------------------------------------ Getters and Setters ------------------------------------------------------------
 
+	//Needs to be renamed to gameOverTimer
 	public float Timer { //timer used elsewhere to end the game
 		get {
 			return _gameOverTimer;
 		}
 	}
 
+	//Needs to be renamed to UmbrellaCharge or WindCharge
 	public float Charge {
 		get {
 			return _charge;
@@ -63,33 +83,45 @@ public class GmaeManage : MonoBehaviour
 
 	// Gonna need to add a load of getters so other functions can get access to various variables
 
-//-------------------------------------- All the calls -----------------------------------------------------------------
+//-------------------------------------- The Setup -----------------------------------------------------------------
 
+	void Start ()
+	{
+		if (Input.GetJoystickNames () [0] != null) {// checks to see if a controller is connected
+			PS3Controller ();
+		} else {
+			KeyboardController ();
+		}
+	}
+
+//-------------------------------------- All the calls -----------------------------------------------------------------
 
 	void Update ()
 	{
 		gameOver = GetComponent<CameraControl> ().DeadDead;
 		RestartGame ();
-//		PauseGame ();
+		PauseGame ();
 		EndGame ();
 	}
 
 //-------------------------------------- What controller is being used -----------------------------------------------------------------
 	void PS3Controller ()
 	{
+		print ("PS3 Controller");
 		//checks to see if there is a ps3 controller attached
 		//changes the controls accordingly
 	}
 
 	void KeyboardController ()
 	{
+		print ("Keyboard");
 		//checks to see if there is only a keyboard
 		//changes the controls accordingly
 	}
 
+
 //-------------------------------------- Start Game is elsewhere for some reason -----------------------------------------------------------------
-
-
+	
 	void StartGame ()
 	{
 		if (Application.loadedLevel == 0) {
@@ -102,7 +134,6 @@ public class GmaeManage : MonoBehaviour
 
 	void startScreen ()
 	{
-
 		// just wondering if these should be booleans that affect other areas of the game rather then have it all in one
 		// could use the Application.loadedLevel to determine what should be used and when
 		FlyUmbrellaFly ();
@@ -117,23 +148,10 @@ public class GmaeManage : MonoBehaviour
 	{
 		umbrella.AddForce (2, 5, 0 * softly);
 	}
-
-
+	
 	// public functions that can be assigned to and called from any other script
 	// the WhiteOut script contains very similar funcitons so would be easier to just combine them
 
-	void fadeIn (/*needs a parameter which would be the image that needs to be faded*/)
-	{
-		
-		fading.a = Mathf.Lerp (fading.a, 1, Time.fixedDeltaTime * Speed);
-		
-	}
-
-	void fadeOut (/*needs a parameter which would be the image that needs to be faded*/)
-	{
-		
-		fading.a = Mathf.Lerp (fading.a, -1, Time.fixedDeltaTime * Speed);
-	}
 
 
 //-------------------------------------- Ending the game is here (sort of) -----------------------------------------------------------------
@@ -151,7 +169,8 @@ public class GmaeManage : MonoBehaviour
 	{
 		if (Input.GetButtonDown ("Submit")) {
 			isPaused = !isPaused;
-			//toggle between the 2 pause statements
+			GetComponent<Grayscale> ().enabled = isPaused;
+			GetComponent<BlurOptimized> ().enabled = isPaused;
 		}
 			
 		if (!isPaused) {
@@ -159,75 +178,38 @@ public class GmaeManage : MonoBehaviour
 		} else if (isPaused) {
 			Paused ();
 		}
-			
-		if (Time.timeScale == 0) {
-			// calls a function once time has stopped
-		}
+
+		FixedPause ();	
 	}
 
 	void Paused ()
 	{
-		Time.timeScale = 0;
-		
-		GetComponent<Grayscale> ().enabled = true;
-		GetComponent<BlurOptimized> ().enabled = true;
-		
-		FadeIn ();
-		GreyFade.color = fader;
-		
-		
-		if (Input.GetKeyDown (KeyCode.L)) {
-			
-			Application.LoadLevel ("Start_Screen");
-		}
-		if (Input.GetKeyDown (KeyCode.R)) {
-			Application.LoadLevel ("Boucing");
-		}
+		Time.timeScale = 0; //game paused
+		fading.Fades(PauseScreen, 1, transitionSpeed);
+//		fading.FadeIn(0, PauseScreen);
+
 	}
 	
 	void NotPaused ()
 	{
-		Time.timeScale = 1f;//runs at regular time
-		GetComponent<Grayscale> ().enabled = false;
-		GetComponent<BlurOptimized> ().enabled = false;
-		
-		FadeOut ();
-		GreyFade.color = fader;
+		Time.timeScale = 1f; //runs at regular time
+		fading.Fades(PauseScreen, 0, transitionSpeed);
 	}
 
 	void FixedPause ()
 	{
 		if (!Input.anyKey) {
-			_timer -= Time.fixedDeltaTime;
-		}
-				
-		if (_timer <= 0) {
-					
-			isPaused = true;//when the timer reaches 0 then the pause screen will activate
-		}
-				
-		if (Input.anyKey) {
-					
-			_timer = autoPauseTimer;//once a key is pressed the timer should revert back to 500
+			autoPauseTimer += Time.deltaTime;
+
+			if (autoPauseTimer >= 60) {
+				isPaused = true;//when the timer reaches 0 then the pause screen will activate
+			}
+
+		} else if (Input.anyKey || Mathf.Abs (Input.GetAxis ("Horizontal_L")) > 0 || Mathf.Abs (Input.GetAxis ("Vertical_L")) > 0) {
+			autoPauseTimer = 0;//once a key is pressed the timer should revert back to 0
 		}
 	}
-
-	//---------------------------- Image Fades -----------------------------------------------------------------------
 	
-	
-	void FadeIn ()
-	{
-		fader.a = Mathf.Lerp (fader.a, 1, Time.fixedDeltaTime * SlowDown);
-	}
-	
-	void FadeOut ()
-	{
-		fader.a = Mathf.Lerp (fader.a, 0, Time.fixedDeltaTime * SlowDown);//this should lerp between the opacity values of the pause screen the a.value
-		
-	}
-	
-
-
 //-------------------------------------- Resets the game -----------------------------------------------------------------
 	
 	void RestartGame ()
@@ -237,7 +219,6 @@ public class GmaeManage : MonoBehaviour
 		}
 	}
 }
-
 
 ////----------------------------------------------- White Out Stuff ------------------------------------------
 /// 

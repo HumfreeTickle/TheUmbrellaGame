@@ -4,41 +4,28 @@ using UnityEngine.UI;
 
 public class EnterGame : MonoBehaviour
 {
-	//needs to call the GmaeManager script
-
+	private FadeScript fading = new FadeScript();
 
 	public Image whiteIN;
-	private Color whitey;
 	public float speed;
 	public bool Starting;
-
-	void Start ()
-	{
-		whitey = whiteIN.color;
-	}
-
+	
 	void Update ()
 	{
 		if (Starting) {
-			fadeWhite ();
+			fading.Fades(whiteIN, 1, speed);
+
+			if (whiteIN.color.a > 0.5) {
+				Invoke ("whichLevel", 3); //delays the loading of Level-1
+			}
 		}
 	}
 	
-	// Update is called once per frame
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.gameObject.tag == "Player") {
-			Debug.Log ("SceneShouldStart");
 			Starting = true;
 		}
-	}
-
-	void fadeWhite ()
-	{
-		whitey.a = Mathf.Lerp (whitey.a, 1, Time.deltaTime * speed);
-		whiteIN.color = whitey;
-		Invoke ("whichLevel", 3); //delays the loading of Level-1
-
 	}
 		
 	void whichLevel ()
