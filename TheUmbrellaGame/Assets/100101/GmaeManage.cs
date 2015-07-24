@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityStandardAssets.ImageEffects;
+using Inheritence;
 
 public enum GameState // sets what game state is currently being viewed
 {
@@ -36,7 +37,7 @@ public class GmaeManage : MonoBehaviour
 
 //------------------------------------------- Inherited Classes ------------------------------------//
 
-	public FadeScript fading = new FadeScript();
+	public FadeScript fading = new FadeScript ();
 
 //--------------------------------------------------------------------------------------------------//
 
@@ -77,7 +78,6 @@ public class GmaeManage : MonoBehaviour
 		//set
 	}
 
-
 	// Might need a check to see what scene the game is in 
 	// Just for the start function more then anything else
 
@@ -89,7 +89,7 @@ public class GmaeManage : MonoBehaviour
 	{
 		if (Input.GetJoystickNames () [0] != null) {// checks to see if a controller is connected
 			PS3Controller ();
-		} else {
+		} else if (Input.GetJoystickNames () [0] == null) {
 			KeyboardController ();
 		}
 	}
@@ -185,7 +185,7 @@ public class GmaeManage : MonoBehaviour
 	void Paused ()
 	{
 		Time.timeScale = 0; //game paused
-		fading.Fades(PauseScreen, 1, transitionSpeed);
+		fading.Fades (PauseScreen, 1, transitionSpeed);
 //		fading.FadeIn(0, PauseScreen);
 
 	}
@@ -193,7 +193,7 @@ public class GmaeManage : MonoBehaviour
 	void NotPaused ()
 	{
 		Time.timeScale = 1f; //runs at regular time
-		fading.Fades(PauseScreen, 0, transitionSpeed);
+		fading.Fades (PauseScreen, 0, transitionSpeed);
 	}
 
 	void FixedPause ()

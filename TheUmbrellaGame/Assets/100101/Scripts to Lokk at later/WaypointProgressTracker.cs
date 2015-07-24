@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnityStandardAssets.Utility
+namespace NPC
 {
     public class WaypointProgressTracker : MonoBehaviour
     {

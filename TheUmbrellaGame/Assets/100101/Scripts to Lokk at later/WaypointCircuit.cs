@@ -6,7 +6,8 @@ using UnityEditor;
 
 #endif
 
-namespace UnityStandardAssets.Utility
+namespace NPC 
+//	UnityStandardAssets.Utility
 {
     public class WaypointCircuit : MonoBehaviour
     {
@@ -219,7 +220,7 @@ namespace UnityStandardAssets.Utility
     }
 }
 
-namespace UnityStandardAssets.Utility.Inspector
+namespace NPC
 {
 #if UNITY_EDITOR
     [CustomPropertyDrawer(typeof (WaypointCircuit.WaypointList))]
