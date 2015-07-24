@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class startGame : MonoBehaviour {
+public class startGame : MonoBehaviour
+{
 
 //------------------------------------------ Needs to be moved into the GmaeManager script ------------------------------------------
 
@@ -13,80 +14,70 @@ public class startGame : MonoBehaviour {
 	public bool starting;
 	private Image umbrellaGame;
 	private Color fading;
+	public GameObject startButton;
+	private Color startButtonImage;
 	public float Speed;
 	public bool timeStart;
 	public GameObject brolly;
 	public float thrust;
 	private Rigidbody umbrella;
 	public float softly;
+	private float lerpNumber = 1;
 
 //--------------------------------------------------- Sets up all the relevent stuff ------------------------------------------
 
-	void Start(){
+	void Start ()
+	{
 
-		timer = 200;
 		starting = false;
 		fading.a = 0;
-		umbrellaGame = GetComponent<Image>();
-		fading = GetComponent<Image>().color;
-		umbrella = brolly.GetComponent<Rigidbody>();
+		umbrellaGame = GetComponent<Image> ();
+		fading = GetComponent<Image> ().color;
+		umbrella = brolly.GetComponent<Rigidbody> ();
+		startButtonImage = startButton.GetComponent<Image> ().color;
 
 	}
 
 //----------------------------------------------- Checks and calls ------------------------------------------
 
-	void Update(){
+	void Update ()
+	{
 
-		if (Input.GetButtonDown ("Submit")){
+		if (Input.GetButtonDown ("Submit")) {
+			if (!startButton) {
+				return;
+			}
 			timeStart = true;
+			startButton.GetComponent<Animator> ().enabled = false;
 		}
-		if(timeStart == true){
-			timer--;
-			fadeIn();
+		if (timeStart) {
+			startButton.GetComponent<Image> ().color = startButtonImage;
 			umbrellaGame.color = fading;
+
+			if (fading.a > 0.9f) {
+				lerpNumber = -1;
+				starting = true;
+			}
+
+			Fade ();
 		}
-		if(timer < 0){
-			fadeOut();
-			starting = true;
-		}
-		if(starting == true){
-			FlyUmbrellaFly();
+
+		if (starting) {
+			FlyUmbrellaFly ();
 		}
 	}
 
 //----------------------------------------------- Other Funcitons ------------------------------------------
-
-
-	void FlyUmbrellaFly(){
-		umbrella.AddForce(2,5,0 * softly);
+	
+	void FlyUmbrellaFly ()
+	{
+		umbrella.AddForce (2, 5, 0 * softly);
 	}
 
-	void fadeIn(){
-
-		fading.a = Mathf.Lerp (fading.a, 1, Time.fixedDeltaTime * Speed);
-
-	}
-	void fadeOut(){
-
-		fading.a = Mathf.Lerp (fading.a, -1, Time.fixedDeltaTime * Speed);
+	void Fade ()
+	{
+		startButtonImage.a = Mathf.Lerp (startButtonImage.a, 0, Time.deltaTime * 10);
+		fading.a = Mathf.Lerp (fading.a, lerpNumber, Time.deltaTime * Speed);
 	}
 }
-
-
-//	public void LoadLevel ()
-//	{ //USed by the buttons onCLick function to change the level
-//		if (!nextLevel) { //To stop you calling the function multiple times
-//			Invoke ("whichLevel", changeTime); //delays the loading of Level-1
-//			nextLevel = true;
-//		}
-
-//}
-
-//	void whichLevel ()
-//	{
-//		Application.LoadLevel (1); //Changes to the next scene
-//	}
-
-// Lerp colour thing
-// 
 
