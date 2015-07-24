@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using Inheritence;
 
+//------------------------------------------ Pretty sure this needs to be moved to the Gmaemange script -------------------------
+
 namespace Useless
 {
 	public class EnterGame : MonoBehaviour
@@ -15,7 +17,7 @@ namespace Useless
 		void Update ()
 		{
 			if (Starting) {
-				fading.Fades (whiteIN, 1, speed);
+				fading.FadeIN (whiteIN, speed);
 
 				if (whiteIN.color.a > 0.5) {
 					Invoke ("whichLevel", 3); //delays the loading of Level-1

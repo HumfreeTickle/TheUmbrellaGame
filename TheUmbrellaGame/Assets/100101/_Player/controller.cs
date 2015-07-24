@@ -7,6 +7,9 @@ namespace Player
 	public class controller : MonoBehaviour
 	{
 
+		public GmaeManage gameManager;
+
+
 		//Empty gameobject that controls on a single plane
 		//The umbrella is a facade
 
@@ -39,7 +42,6 @@ namespace Player
 		void Start ()
 		{
 			rb = GetComponent<Rigidbody> ();
-//		rbMass = rb.mass;
 			lsphereMass = leftsphere.mass;
 			rsphereMass = rightsphere.mass;
 			fsphereMass = frontsphere.mass;
@@ -49,15 +51,19 @@ namespace Player
 
 		void FixedUpdate ()
 		{
-			Movement ();
-			HorizontalMass ();
-			VerticalMass ();
-			if (Input.GetButton ("DropFromSky")) {
-				TheDescent ();
-			} else {
-				if (GetComponent<CreateWind> ().charge > 1) {
-					GetComponent<upwardForce> ().enabled = true;
+			if (gameManager.gameState == GameState.Game) {
+				Movement ();
+				HorizontalMass ();
+				VerticalMass ();
+				if (Input.GetButton ("DropFromSky")) {
+					TheDescent ();
+				} else {
+					if (GetComponent<CreateWind> ().charge > 1) {
+						GetComponent<upwardForce> ().enabled = true;
+					}
 				}
+			} else if (gameManager.gameState == GameState.GameOver) {
+				TheDescent ();
 			}
 		}
 
