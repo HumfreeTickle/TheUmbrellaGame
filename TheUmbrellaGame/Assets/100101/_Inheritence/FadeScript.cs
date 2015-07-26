@@ -6,7 +6,7 @@ namespace Inheritence
 {
 	public class FadeScript
 	{
-		private Color transparent = new Vector4 (1, 1, 1, 0);
+//		private Color transparent = new Vector4 (1, 1, 1, 0);
 		private bool fadeIn = true; 
 //---------------------------- Image Fades -----------------------------------------------------------------------
 
@@ -36,6 +36,11 @@ namespace Inheritence
 			myImage.color = alphaColour;
 		}
 
+		/// <summary>
+		/// Fades the image in and out
+		/// </summary>
+		/// <param name="myImage">Image to transition..</param>
+		/// <param name="speed">Speed of transition.</param>
 		public void FadeINandOUT (Image myImage, float speed)
 		{
 			if (fadeIn) {

@@ -10,6 +10,7 @@ public enum GameState // sets what game state is currently being viewed
 	NullState,
 	Intro,
 	Pause,
+	Idle,
 	Game,
 	GameOver
 }
@@ -63,13 +64,16 @@ public class GmaeManage : MonoBehaviour
 	public float autoPauseTimer; // idle timer till game auto pauses
 	public float transitionSpeed; // speed of transitions
 	public float _gameOverTimer; // 
-
-	private float _charge; // the umbrella's energy charge
+	public float _charge; // the umbrella's energy charge
 
 	//Start script Stuff
 	private bool nextLevel; // has the transtion to Level-1 been activated
 	public bool timeStart;
-	
+
+
+	// Eventually these should be made into a dynamic list that is moved in and out depending on the type of controls needed
+	private string controllerTypeVertical;
+	private string controllerTypeHorizontal; 
 
 //------------------------------------ Getters and Setters ------------------------------------------------------------
 
@@ -81,11 +85,27 @@ public class GmaeManage : MonoBehaviour
 	}
 
 	//Needs to be renamed to UmbrellaCharge or WindCharge
-	public float Charge {
+	public float WindCharge {
 		get {
 			return _charge;
 		}
-		//set
+		set {
+			_charge = value;
+		}
+	}
+
+
+	//
+	public string ControllerTypesHorizontal {
+		get {
+			return controllerTypeHorizontal;
+		}
+	}
+
+	public string ControllerTypeVertical {
+		get {
+			return controllerTypeVertical;
+		}
 	}
 
 
@@ -103,20 +123,32 @@ public class GmaeManage : MonoBehaviour
 
 //-------------------------------------- The Setup -----------------------------------------------------------------
 
-	void Start ()
+	void Awake ()
 	{
 		//-------------------- For the different controllers ---------------------------------
 
-		if (Input.GetJoystickNames () [0] != null) {// checks to see if a controller is connected
+		if (Input.GetJoystickNames ().Length > 0) {// checks to see if a controller is connected
 			controllerType = ControllerType.ConsoleContoller;
-		} else if (Input.GetJoystickNames () [0] == null) {
+			controllerTypeVertical = "Vertical_L";
+			controllerTypeHorizontal = "Horizontal_L";
+			print("Player 1: Connected");
+
+
+		} else if (Input.GetJoystickNames ().Length == 0) {
 			controllerType = ControllerType.Keyboard;
+			controllerTypeVertical = "Vertical";
+			controllerTypeHorizontal = "Horizontal";
+
+		}else{
+			controllerType = ControllerType.NullState;
+			Debug.Log("Disconnected");
 		}
 
 		//-------------------- For the different Scenes ---------------------------------
 
-		if (Application.loadedLevel == 0) {
-			gameState = GameState.Intro; //called during the startscreen only
+		if (Application.loadedLevel == 0) { //Start screen
+
+			gameState = GameState.Intro; 
 			startButton = GameObject.Find ("Start Button").GetComponent<Image> ();
 			umbrellaGame = GameObject.Find ("Umbrella Logo").GetComponent<Image> ();
 			WhiteScreen = GameObject.Find ("WhiteScreen").GetComponent<Image> ();
@@ -128,8 +160,9 @@ public class GmaeManage : MonoBehaviour
 				return;
 			}
 
-		} else if (Application.loadedLevel == 1) {
-			gameState = GameState.Intro; //called during the mainscreen only
+		} else if (Application.loadedLevel == 1) { //Main screen
+
+			gameState = GameState.Intro; 
 			PauseScreen = GameObject.Find ("Pause Screen").GetComponent<Image> ();
 			WhiteScreen = GameObject.Find ("WhiteScreen").GetComponent<Image> ();
 			WhiteScreen.color = Color.white;
@@ -150,10 +183,12 @@ public class GmaeManage : MonoBehaviour
 		} else if (gameState != GameState.Intro) {//gameState == GameState.Game || gameState == GameState.Pause || gameState == GameState.GameOver ) {
 
 			RestartGame ();
-			PauseGame ();
+
+			if (gameState != GameState.GameOver) {//so the player can't pause when they die
+				PauseGame ();
+			}
 			EndGame ();
 		}
-
 
 		CheckStates ();
 	}
@@ -162,7 +197,9 @@ public class GmaeManage : MonoBehaviour
 	
 	void StartGame ()
 	{
-		if (Application.loadedLevel == 0) {
+		if (Application.loadedLevel == 0) { //Opening screen
+
+
 			if (Input.GetButtonDown ("Submit")) {
 				if (!startButton) {
 					return;
@@ -180,11 +217,12 @@ public class GmaeManage : MonoBehaviour
 				}	
 			}
 
-		} else if (Application.loadedLevel == 1) {
+		} else if (Application.loadedLevel == 1) { //Main game screen
+
+
 			if (transform.position.y < 200) {
 				gameState = GameState.Game;
 			}
-
 			WhiteScreenTransisitions ();
 		}
 	}
@@ -225,6 +263,10 @@ public class GmaeManage : MonoBehaviour
 	
 	void EndGame ()
 	{
+		if(_charge < 1){
+			gameState = GameState.GameOver;
+		}
+
 		if (gameState == GameState.GameOver) {
 
 			_gameOverTimer += Time.deltaTime;

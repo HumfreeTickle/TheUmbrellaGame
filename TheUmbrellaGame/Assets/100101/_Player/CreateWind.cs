@@ -12,7 +12,7 @@ namespace Player.PhysicsStuff
 		public GameObject windSystem;
 		private GameObject instatiatedWind;
 		private Vector3 spawnDistance;
-		public float charge = 100;
+		private float charge;
 		public float maxTerrainDistance = 1.0f;
 
 		private Material umbrellaColour;
@@ -28,22 +28,26 @@ namespace Player.PhysicsStuff
 			gameState = GameManager.gameState;
 			umbrella = GameObject.Find ("Umbrella");
 			umbrellaRb = this.gameObject.GetComponent<Rigidbody>();
-			umbrellaColour = umbrella.GetComponent<Renderer> ().material;
+
+			umbrellaColour = umbrella.transform.GetChild(0).GetComponent<Renderer> ().material;
+			charge = GameManager.WindCharge;
 		}
 
 		void Update ()
 		{
+			charge = GameManager.WindCharge;
+
 			bounceBack = Mathf.Clamp(bounceBack, Mathf.NegativeInfinity, 0);
 			gameState = GameManager.gameState;
 
 			if (gameState != GameState.Pause || gameState != GameState.GameOver) {
 				if (Input.GetButtonDown ("CrateWind") && charge >= 1) {
 					SummonWind ();
-					charge = Mathf.Lerp (charge, 0, Time.fixedDeltaTime * 10);
+					GameManager.WindCharge = Mathf.Clamp( Mathf.Lerp (GameManager.WindCharge, 0, Time.fixedDeltaTime * 10), 2, 100);
 				}
 
 //---------------- TURN OFF UPWARDFORCE ---------------------
-				if (charge <= 1) {
+				if (charge <= 10) {
 					GetComponent<upwardForce> ().enabled = false;
 				} 
 
@@ -68,10 +72,11 @@ namespace Player.PhysicsStuff
 
 					//------------- CONDITIONS ----------------------------
 					if (hit.collider.tag == "Terrain" && hit.distance < maxTerrainDistance) {
-						charge = Mathf.Lerp (charge, 100, Time.time / (hit.distance * 100));
+						GameManager.WindCharge = Mathf.Clamp( Mathf.Lerp (charge, 100, Time.time / (hit.distance * 100)), 2, 100);
 					} 
 				} else {
-					charge = Mathf.Lerp (charge, 0, Time.deltaTime);
+					GameManager.WindCharge = Mathf.Lerp (charge, 0, Time.deltaTime);
+
 					umbrellaRb.AddForce(transform.TransformDirection(this.gameObject.transform.forward) * bounceBack);
 					//not really working. Need to try something else
 				}

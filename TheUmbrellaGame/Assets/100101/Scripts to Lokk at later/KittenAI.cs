@@ -13,7 +13,7 @@ namespace NPC
 		bool flee;
 		bool escaped;
 		NavMeshAgent agent;
-		Animator anim;  
+//		Animator anim;  
 
 //------------------------------------------ Script Zoey sent me -------------------------------------------------------
 //------------------------------------------ Should go through it at some point -------------------------------------------------------
@@ -23,7 +23,7 @@ namespace NPC
 		void Start ()
 		{
 			agent = GetComponent <NavMeshAgent> ();
-			anim = GetComponent<Animator> ();
+//			anim = GetComponent<Animator> ();
 			//kittenObject = GetComponentInChildren<GameObject> ();
 			flee = false;
 			escaped = true;

@@ -14,15 +14,13 @@ namespace Player
 		private float sw;
 		public float sine;
 		public ForceMode theForce;
-		// Use this for initialization
+
 		void Start ()
 		{
 			rb = GetComponent<Rigidbody> ();
-//		mainMass = rb.mass;
 
 		}
 	
-		// Update is called once per frame
 		void FixedUpdate ()
 		{
 			SineWave ();
