@@ -16,14 +16,9 @@ namespace Inheritence
 
 //-------------------------------------- Destroys GameObject On Timer Countdown -------------------------------------------------------
 
-		public void DestroyOnTimer (GameObject objectToDestroy , float DestroyDelay)
+		public void DestroyOnTimer (GameObject objectToDestroy, float DestroyDelay)
 		{
-			_timer += Time.deltaTime;
-
-			if (_timer > DestroyDelay) {
-				MonoBehaviour.Destroy (objectToDestroy);
-			}//end
-
+			MonoBehaviour.Destroy (objectToDestroy, DestroyDelay);
 		}//end
 
 //-------------------------------------- Destroys GameObject On Button Press -------------------------------------------------------

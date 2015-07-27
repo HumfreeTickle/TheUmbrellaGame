@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Inheritence;
+
 
 namespace Player
 {
 	public class wind : MonoBehaviour
 	{
+		public DestroyObject destroyObject = new Inheritence.DestroyObject();
 
 		public float windForce;
 		public Transform umbrellaObject;
@@ -18,7 +21,7 @@ namespace Player
 		{
 			transform.LookAt (GameObject.Find ("main_Sphere").transform);
 			umbrellaFalls ();
-			Death ();
+			destroyObject.DestroyOnTimer(this.gameObject, 5f);
 		}
 
 		//----------------------------- OTHER FUNCTIONS ------------------------------------------------------------------------
@@ -37,11 +40,6 @@ namespace Player
 			if (umbrella.name == "main_Sphere") {
 				umbrella.GetComponent<Rigidbody> ().AddForce (Vector3.up * windForce);
 			}
-		}
-
-		void Death ()
-		{
-			Destroy (this.gameObject, 5f);
 		}
 	}
 }
