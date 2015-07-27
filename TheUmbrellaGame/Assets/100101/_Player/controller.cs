@@ -1,21 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Player.PhysicsStuff;
+using Inheritence;
 
 namespace Player
 {
 	public class controller : MonoBehaviour
 	{
+		public DestroyObject destroyStuff = new Inheritence.DestroyObject ();
 		public GmaeManage gameManager;
-		public Rigidbody leftsphere;
-		public Rigidbody rightsphere;
 		public Rigidbody frontsphere;
 		public Rigidbody backsphere;
+		public Rigidbody leftsphere;
+		public Rigidbody rightsphere;
+		public Rigidbody handle;
+		public GameObject leftTrail;
+		public GameObject rightTrail;
+		private GameObject trail_L;
+		private GameObject trail_R;
+		public Animator umbrellaAnim;
 		public ForceMode movementForce;
 		public ForceMode backwardForce;
 		public ForceMode rotationForce;
-		public Rigidbody handle;
-		public Transform movement;
 		private Rigidbody rb;
 		private float lsphereMass;
 		private float rsphereMass;
@@ -50,11 +56,13 @@ namespace Player
 				Movement ();
 				HorizontalMass ();
 				VerticalMass ();
-				if(rb.velocity.magnitude <= 2){
-					gameManager.gameState = GameState.Idle;
-				}else{
-					gameManager.gameState = GameState.Game;
-				}
+			
+//				if(rb.velocity.magnitude <= 2){
+//					gameManager.gameState = GameState.Idle;
+//				}else{
+//					gameManager.gameState = GameState.Game;
+//				}
+
 				if (Input.GetButton ("DropFromSky")) {
 					TheDescent ();
 				} 
@@ -67,10 +75,21 @@ namespace Player
 		
 		void Movement ()
 		{
+			umbrellaAnim.SetFloat ("Input_Vertical", Input.GetAxis (controllerTypeVertical));
+
 			if (Input.GetAxis (controllerTypeVertical) > 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
-				rb.AddForce (transform.TransformDirection (movement.forward) * Input.GetAxis (controllerTypeVertical) * speed, movementForce); //Add force in the direction it is facing
+				rb.AddForce (transform.TransformDirection (Vector3.forward) * Input.GetAxis (controllerTypeVertical) * speed, movementForce); //Add force in the direction it is facing
 				//instatiate new trial reneder gameObject
-			} 
+				if (leftsphere.transform.childCount == 0) {
+					trail_L = Instantiate (leftTrail, leftsphere.transform.position, Quaternion.identity) as GameObject;
+					trail_L.transform.parent = leftsphere.transform;
+				}
+
+				if (rightsphere.transform.childCount == 0) {
+					trail_R = Instantiate (rightTrail, rightsphere.transform.position, Quaternion.identity) as GameObject;
+					trail_R.transform.parent = rightsphere.transform;
+				}
+			}
 			
 			if (Input.GetAxis (controllerTypeVertical) < 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
 				
@@ -92,8 +111,26 @@ namespace Player
 					rb.AddTorque (transform.up * Input.GetAxis (controllerTypeHorizontal) * turningSpeed, rotationForce);
 					// depending on the direction instatiate a trail renederer
 					// if one already exists increase the size
+
+					if (Input.GetAxis (controllerTypeHorizontal) > 0) {
+						if (leftsphere.transform.childCount == 0) {
+							trail_L = Instantiate (leftTrail, leftsphere.transform.position, Quaternion.identity) as GameObject;
+							trail_L.transform.parent = leftsphere.transform;
+						}
+					} else if (Input.GetAxis (controllerTypeHorizontal) < 0) {
+						if (rightsphere.transform.childCount == 0) {
+							trail_R = Instantiate (rightTrail, rightsphere.transform.position, Quaternion.identity) as GameObject;
+							trail_R.transform.parent = rightsphere.transform;
+						}
+					}
+
 				} else {
 					rb.angularVelocity = Vector3.Lerp (rb.angularVelocity, Vector3.zero, Time.deltaTime * 10);
+				}
+
+				if (rb.velocity.magnitude < 0.3f) {
+					destroyStuff.DestroyOnTimer (trail_L, 1);
+					destroyStuff.DestroyOnTimer (trail_R, 1);
 				}
 			}
 		}

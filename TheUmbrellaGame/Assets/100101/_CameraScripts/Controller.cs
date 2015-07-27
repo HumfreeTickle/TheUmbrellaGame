@@ -17,10 +17,7 @@ namespace CameraScripts
 		public float xAway;
 		public float yAway;
 		public float zAway;
-		
-		// The target we are following
-		public Transform target;
-		
+
 		// The distance in the x-z plane to the target
 		public float distance = 10.0f;
 		public float side = 2f;
@@ -62,7 +59,7 @@ namespace CameraScripts
 			
 			if (gameState != GameState.GameOver) {
 				
-				if (gameState == GameState.Game || gameState == GameState.Intro || gameState == GameState.Idle) {
+				if (gameState == GameState.Game || gameState == GameState.Intro) {
 					
 					// Calculate gameState == GameState.Pausethe current rotation angles (only need quaternion for movement)
 					float wantedRotationAngle = umbrellaTr.eulerAngles.y;
@@ -98,14 +95,15 @@ namespace CameraScripts
 					// Set the LookAt property to remain fixed on the target
 					transform.LookAt (umbrellaTr);
 				}
+			}
 				//-------------------------------------------- Camera Changes on Death -------------------------------------------------------//
 				
 				else if (gameState == GameState.GameOver) {
-					if (GameManager.Timer > 2) {
-						transform.position = transform.position - transform.TransformDirection (new Vector3 (xAway, yAway, zAway));
-					} else {
-						transform.LookAt (umbrellaTr);
-					}
+
+				if (GameManager.Timer > 2) {
+					transform.position = transform.position + new Vector3 (xAway, yAway, zAway);
+				} else {
+					transform.LookAt (umbrellaTr);
 				}
 			}
 		}

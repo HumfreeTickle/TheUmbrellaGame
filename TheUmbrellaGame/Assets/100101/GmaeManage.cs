@@ -219,8 +219,7 @@ public class GmaeManage : MonoBehaviour
 
 		} else if (Application.loadedLevel == 1) { //Main game screen
 
-
-			if (transform.position.y < 200) {
+			if (Time.timeSinceLevelLoad > 4) {
 				gameState = GameState.Game;
 			}
 			WhiteScreenTransisitions ();

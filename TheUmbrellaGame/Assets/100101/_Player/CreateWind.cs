@@ -54,6 +54,7 @@ namespace Player.PhysicsStuff
 //---------------------------- COLOUR CHANGING ------------------------------------------------------------------------
 
 				Color newUmbrellaColour = Vector4.Lerp (umbrellaColour.color, new Vector4 (charge / 100, charge / 100, charge / 100, 1), Time.deltaTime * (charge + 1)); 
+
 				umbrellaColour.SetColor ("_Color", newUmbrellaColour);
 
 
