@@ -23,3 +23,5 @@ public class Day_night : MonoBehaviour
 //		sun.intensity = Mathf.Lerp(sun.intensity, 0, Time.deltaTime/100);
 	}
 }
+
+	

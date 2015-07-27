@@ -6,6 +6,8 @@ namespace UnityStandardAssets.ImageEffects
     [ExecuteInEditMode]
     [RequireComponent (typeof(Camera))]
     [AddComponentMenu ("Image Effects/Camera/Camera Motion Blur") ]
+
+
     public class CameraMotionBlur : PostEffectsBase
     {
         // make sure to match this to MAX_RADIUS in shader ('k' in paper)
