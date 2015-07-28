@@ -56,7 +56,7 @@ namespace Player
 				Movement ();
 				HorizontalMass ();
 				VerticalMass ();
-			
+
 //				if(rb.velocity.magnitude <= 2){
 //					gameManager.gameState = GameState.Idle;
 //				}else{
@@ -79,6 +79,7 @@ namespace Player
 
 			if (Input.GetAxis (controllerTypeVertical) > 0.1f) { // Probably should only use forward for this and have back be a kind of breaking system
 				rb.AddForce (transform.TransformDirection (Vector3.forward) * Input.GetAxis (controllerTypeVertical) * speed, movementForce); //Add force in the direction it is facing
+
 				//instatiate new trial reneder gameObject
 				if (leftsphere.transform.childCount == 0) {
 					trail_L = Instantiate (leftTrail, leftsphere.transform.position, Quaternion.identity) as GameObject;
@@ -101,17 +102,15 @@ namespace Player
 					rb.AddForce (transform.forward * Input.GetAxis (controllerTypeVertical), movementForce); //Add force in the direction it is facing
 					
 					rb.AddForce (transform.forward * Input.GetAxis (controllerTypeVertical), backwardForce); //Add force in the direction it is facing
-					
-					
+
 					rb.AddForce (transform.forward * Input.GetAxis (controllerTypeVertical), movementForce); //Add force in the direction it is facing
 					
 				}
 				
 				if (Mathf.Abs (Input.GetAxis (controllerTypeHorizontal)) > 0) { //This shoould rotate the player rather than move sideways
 					rb.AddTorque (transform.up * Input.GetAxis (controllerTypeHorizontal) * turningSpeed, rotationForce);
-					// depending on the direction instatiate a trail renederer
-					// if one already exists increase the size
 
+					//--------------------------------------- create trail -----------------------------------------------//
 					if (Input.GetAxis (controllerTypeHorizontal) > 0) {
 						if (leftsphere.transform.childCount == 0) {
 							trail_L = Instantiate (leftTrail, leftsphere.transform.position, Quaternion.identity) as GameObject;
@@ -123,10 +122,7 @@ namespace Player
 							trail_R.transform.parent = rightsphere.transform;
 						}
 					}
-
-				} else {
-					rb.angularVelocity = Vector3.Lerp (rb.angularVelocity, Vector3.zero, Time.deltaTime * 10);
-				}
+				} 
 
 				if (rb.velocity.magnitude < 0.3f) {
 					destroyStuff.DestroyOnTimer (trail_L, 1);

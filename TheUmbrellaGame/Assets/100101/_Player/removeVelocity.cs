@@ -20,6 +20,7 @@ namespace Player
 		{
 			if (!Input.anyKeyDown) {
 				rb.velocity = Vector3.Lerp (rb.velocity, Vector3.zero, Time.fixedDeltaTime * slowDownSpeed);
+				rb.angularVelocity = Vector3.Lerp (rb.angularVelocity, Vector3.zero, Time.fixedDeltaTime * 10);
 			}
 		}
 	}
