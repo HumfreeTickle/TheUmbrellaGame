@@ -60,7 +60,7 @@ public class GmaeManage : MonoBehaviour
 	private Image umbrellaGame;
 	private Image startButton;
 	private GameObject umbrella;
-	private Rigidbody umbrellaRb;
+	public Rigidbody umbrellaRb;
 	public float autoPauseTimer; // idle timer till game auto pauses
 	public float transitionSpeed; // speed of transitions
 	public float _gameOverTimer; // 
@@ -199,7 +199,6 @@ public class GmaeManage : MonoBehaviour
 	{
 		if (Application.loadedLevel == 0) { //Opening screen
 
-
 			if (Input.GetButtonDown ("Submit")) {
 				if (!startButton) {
 					return;
@@ -207,14 +206,13 @@ public class GmaeManage : MonoBehaviour
 				
 				timeStart = true;
 				startButton.GetComponent<Animator> ().enabled = false;
+
 			}
 			
 			if (timeStart) {
+				fading.FadeOUT(startButton, 3);
 				fading.FadeINandOUT (umbrellaGame, 1);
-				FlyUmbrellaFly ();
-				if (umbrellaGame.color.a > 0.9f) {
-					WhiteScreenTransisitions ();
-				}	
+				Invoke( "FlyUmbrellaFly", 0.5f);
 			}
 
 		} else if (Application.loadedLevel == 1) { //Main game screen
